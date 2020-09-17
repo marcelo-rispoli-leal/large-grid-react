@@ -6,4 +6,6 @@ In the implementation the dependencies "react-window" and "react-virtualized-aut
 
 The initial solution is best displayed on large screens, not yet adjusted for mobile devices.
 
+This project can be visited at https://large-grid-react.herokuapp.com/.
+
 New realeses of the project will soon be available. Please contact us if you encounter any problems or have any suggestions for improvement.
