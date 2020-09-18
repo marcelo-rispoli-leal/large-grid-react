@@ -152,7 +152,7 @@ export default function App() {
   //return app
   return (
     <div>
-      <h1 className="center">SevenApps' Challenge</h1>
+      <h1 className="center">Large Grid React</h1>
       <div className="container">
         {/* filter and summary region */}
         <div
