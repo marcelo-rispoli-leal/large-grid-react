@@ -26,7 +26,7 @@ export default function App() {
       setIsVisibleSpinner(true);
 
       //load api data
-      const res = await fetch('https://randomuser.me/api/');
+      const res = await fetch('https://randomuser.me/api?inc=name,age');
       const json = await res.json();
 
       //temporay arrays
