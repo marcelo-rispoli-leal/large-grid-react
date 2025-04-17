@@ -26,7 +26,7 @@ export default function App() {
       setIsVisibleSpinner(true);
 
       //load api data
-      const res = await fetch('https://random-persons.herokuapp.com/users');
+      const res = await fetch('https://randomuser.me/api/');
       const json = await res.json();
 
       //temporay arrays
