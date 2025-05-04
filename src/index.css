@@ -1,3 +1,9 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 @plugin 'tailwind-scrollbar';
+
+@theme {
+  --breakpoint-3xs: 16rem;
+  --breakpoint-2xs: 24rem;
+  --breakpoint-xs: 32rem;
+}
