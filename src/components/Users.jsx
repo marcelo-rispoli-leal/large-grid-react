@@ -27,10 +27,10 @@ export default function Users() {
       {users.map(({ index, name, age, backgroundColor, lower }) => (
         <div
           key={index}
-          id={`user${index}`}
+          id={`user-${index}`}
           style={{ backgroundColor }}
           className="content-center rounded-xl p-1 font-medium wrap-anywhere"
-          idx={index}
+          age={age}
           lower={lower}
         >{`${name}, ${age}`}</div>
       ))}

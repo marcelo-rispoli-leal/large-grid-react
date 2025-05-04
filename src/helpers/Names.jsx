@@ -11,10 +11,3 @@ const getNames = () => {
 export default function Names() {
   return getNames();
 }
-
-/* [
-        index: i,
-        name: faker.person.firstName() + ' ' + faker.person.lastName(),
-      
-    ],
-    { count: limit } */
