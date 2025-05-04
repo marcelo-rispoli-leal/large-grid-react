@@ -37,5 +37,3 @@ export default function Users() {
     </div>
   );
 }
-
-//className={`bg-(--${color})`}
