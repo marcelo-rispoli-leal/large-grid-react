@@ -1,13 +1,15 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
+import { faker } from "@faker-js/faker/locale/pt_BR";
 
-const limit = Number(import.meta.env.VITE_USERS_LIMIT) | 1000;
+const getNames = () => {
+  const limit = Number(import.meta.env.VITE_USERS_LIMIT) | 1000;
+  return faker.helpers.multiple(
+    () => faker.person.firstName() + " " + faker.person.lastName(),
+    { count: limit },
+  );
+};
 
 export default function Names() {
-  const names = faker.helpers.multiple(
-    () => faker.person.firstName() + ' ' + faker.person.lastName(),
-    { count: limit }
-  );
-  return names;
+  return getNames();
 }
 
 /* [

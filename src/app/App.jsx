@@ -1,6 +1,6 @@
 import Users from "../components/Users";
 
-const users = JSON.stringify(Users());
+//const users = JSON.stringify(Users());
 
 function App() {
   return (
@@ -12,8 +12,9 @@ function App() {
         <div className="mb-5 rounded-xl border border-solid border-neutral-500 text-center">
           0
         </div>
-        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-neutral-300 scrollbar-track-neutral-600 mr-[-1px] mb-5 max-h-80 min-h-60 overflow-x-hidden overflow-y-scroll rounded-l-xl border border-solid border-neutral-600 object-cover py-[10px] pr-[5px] pl-[10px] text-center">
-          {users}
+        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 mb-5 max-h-80 min-h-60 overflow-x-hidden overflow-y-scroll rounded-l-xl border-y border-l border-solid border-neutral-500 object-cover p-2.5 text-center">
+          <Users />
+          {/* {users} */}
         </div>
         <div className="container">
           {/* {Timing(2) ? (
