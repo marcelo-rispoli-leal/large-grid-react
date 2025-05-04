@@ -23,7 +23,7 @@ const getUsers = () => {
 export default function Users() {
   const users = getUsers();
   return (
-    <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+    <div className="max-3xs:3xs:grid-cols-1 3xs:max-2xs:grid-cols-2 2xs:max-xs:grid-cols-3 xs:max-sm:grid-cols-4 grid grid-cols-1 gap-2.5 sm:max-md:grid-cols-5 md:max-lg:grid-cols-6 lg:max-xl:grid-cols-7 xl:max-2xl:grid-cols-8 2xl:grid-cols-10">
       {users.map(({ index, name, age, backgroundColor, lower }) => (
         <div
           key={index}
