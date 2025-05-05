@@ -6,4 +6,15 @@
   --breakpoint-3xs: 16rem;
   --breakpoint-2xs: 24rem;
   --breakpoint-xs: 32rem;
+  --breakpoint-xm: 56rem;
+}
+
+.b-std {
+  border: 1px solid var(--color-neutral-500);
+  border-radius: 0.75rem;
+}
+
+.f-md {
+  font-size: medium;
+  font-weight: 500;
 }

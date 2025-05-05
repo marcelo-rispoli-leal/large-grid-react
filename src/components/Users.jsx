@@ -52,14 +52,14 @@ export default function Users({ info }) {
   return (
     <div
       id="users-container"
-      className="max-3xs:3xs:grid-cols-1 3xs:max-2xs:grid-cols-2 2xs:max-xs:grid-cols-3 xs:max-sm:grid-cols-4 grid grid-cols-1 gap-2.5 sm:max-md:grid-cols-5 md:max-lg:grid-cols-6 lg:max-xl:grid-cols-7 xl:max-2xl:grid-cols-8 2xl:grid-cols-10"
+      className="3xs:max-2xs:grid-cols-2 2xs:max-xs:grid-cols-3 xs:max-md:grid-cols-4 md:max-xm:grid-cols-5 xm:max-lg:grid-cols-6 grid grid-cols-1 gap-3 lg:max-xl:grid-cols-7 xl:max-2xl:grid-cols-8 2xl:grid-cols-10"
     >
       {restUsers.map(({ index, name, age, backgroundColor, lower }) => (
         <div
           key={index}
           id={`user-${index}`}
           style={{ backgroundColor }}
-          className="content-center rounded-xl p-1 font-medium wrap-anywhere"
+          className="f-md content-center rounded-xl p-1 wrap-anywhere"
           age={age}
           lower={lower}
         >{`${name}, ${age}`}</div>
