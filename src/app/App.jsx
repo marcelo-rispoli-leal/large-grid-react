@@ -2,7 +2,7 @@ import { useState } from "react";
 import Users from "../components/Users";
 import Filter from "../components/Filters";
 
-function App() {
+export default function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState(-1);
 
@@ -34,7 +34,7 @@ function App() {
       });
     }
     setFilteredUsers(users);
-
+  
     //hides spinner after sets filtered users
     setIsVisibleSpinner(false);*/
   };
@@ -70,5 +70,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
