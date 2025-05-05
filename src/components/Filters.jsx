@@ -13,7 +13,7 @@ export default function Filter({ id, type, label, help, value, onChange }) {
         <div className="grid grid-cols-1 grid-rows-3 items-center">
           <input
             id={id}
-            className="peer text-md line order-3 col-start-1 row-2 block w-full appearance-none rounded-lg border border-neutral-500 py-0 pr-0 pl-9 leading-7 font-medium text-neutral-900 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 focus:outline-none dark:text-neutral-100"
+            className="peer text-md order-3 col-start-1 row-2 w-full rounded-lg border border-neutral-500 py-0 pr-0 pl-9 leading-7 font-medium focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none"
             type={type}
             value={value}
             min={type === "number" ? "-1" : undefined}
@@ -22,12 +22,12 @@ export default function Filter({ id, type, label, help, value, onChange }) {
           />
           <label
             htmlFor={id}
-            className="order 1 col-start-1 row-1 text-neutral-900 peer-focus:text-cyan-600 dark:text-neutral-100"
+            className="order 1 col-start-1 row-1 peer-focus:text-cyan-600"
           >
             {label}
           </label>
-          <BsSearch className="text-md order-2 col-start-1 row-2 ml-3 text-neutral-900 peer-focus:text-cyan-600 dark:text-neutral-100" />
-          <span className="order-4 col-start-1 row-3 text-sm leading-none text-neutral-900 peer-focus:text-cyan-600 dark:text-neutral-100">
+          <BsSearch className="text-md order-2 col-start-1 row-2 ml-3 font-medium peer-focus:text-cyan-600" />
+          <span className="order-4 col-start-1 row-3 text-sm leading-none peer-focus:text-cyan-600">
             {help}
           </span>
         </div>
@@ -35,5 +35,3 @@ export default function Filter({ id, type, label, help, value, onChange }) {
     </div>
   );
 }
-
-//className="peer order-3 col-start-1 row-2 block w-full appearance-none rounded-lg border border-neutral-500 bg-transparent py-2.5 pr-3 pl-12 text-sm text-neutral-900 focus:border-cyan-700 focus:ring-1 focus:ring-cyan-700 focus:outline-none dark:text-neutral-100"
