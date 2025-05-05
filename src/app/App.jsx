@@ -63,7 +63,7 @@ function App() {
             onChange={handleChange}
           />
         </div>
-        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 mb-5 max-h-80 min-h-60 overflow-x-hidden overflow-y-scroll rounded-l-xl border-y border-l border-solid border-neutral-500 object-cover p-2.5 text-center">
+        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 mb-5 max-h-80 min-h-60 overflow-x-hidden overflow-y-scroll rounded-xl border border-solid border-neutral-500 object-cover p-2.5 text-center">
           <Users />
         </div>
       </div>
