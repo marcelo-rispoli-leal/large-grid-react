@@ -1,11 +1,46 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import Users from "../components/Users";
-import Filter from "../components/Filters";
+import Filter from "../components/Filter";
 import Summary from "../components/Summary";
+import Colors from "../helpers/Colors";
+import Names from "../helpers/Names";
+import Columns from "../helpers/Columns";
+
+const getUsers = () => {
+  const colors = Colors();
+  const names = Names();
+  const users = [];
+
+  for (let i = 0; i < names.length; i++) {
+    const age = ~~(Math.random() * 100);
+
+    users.push({
+      index: i,
+      name: names[i],
+      age,
+      backgroundColor: colors[age],
+      lower: names[i].toLowerCase(),
+    });
+  }
+  return users;
+};
 
 export default function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState(-1);
+  const [allUsers, setAllUsers] = useState([]);
+  const [restUsers, setRestUsers] = useState([]);
+  const columns = Columns();
+
+  useEffect(() => {
+    const users = getUsers();
+    setAllUsers(users);
+    setRestUsers(users);
+    return () => {
+      setAllUsers([]);
+      setRestUsers([]);
+    };
+  }, []);
 
   const handleChange = (newValue, inputType) => {
     //Set filters
@@ -20,18 +55,17 @@ export default function App() {
     }
 
     //Set filtered users
-    /* let users = [];
+    let users = [];
     if (filterAge === -1 && filterName === "") {
-      users = allUsers;
+      users = Object.assign([], allUsers);
     } else {
-      users = allUsers.filter(({ nameLower, age }) => {
+      users = allUsers.filter(({ lower, age }) => {
         return (
-          nameLower.includes(filterName) &&
-          (filterAge === -1 || age === filterAge)
+          lower.includes(filterName) && (filterAge === -1 || age === filterAge)
         );
       });
     }
-    setFilteredUsers(users); */
+    setRestUsers(users);
   };
 
   return (
@@ -56,10 +90,10 @@ export default function App() {
             value={ageFilter}
             onChange={handleChange}
           />
-          <Summary />
+          <Summary users={restUsers.length} columns={columns} />
         </div>
         <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 b-lr max-h-64 min-h-32 overflow-x-hidden overflow-y-auto p-3">
-          <Users filterName={nameFilter} filterAge={ageFilter} />
+          <Users users={restUsers} />
         </div>
       </div>
     </div>
