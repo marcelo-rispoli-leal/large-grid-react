@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Colors from "../helpers/Colors";
 import Names from "../helpers/Names";
 import Columns from "../helpers/Columns";
@@ -22,7 +22,7 @@ const getUsers = () => {
   return users;
 };
 
-export default function Users({ info }) {
+export default function Users({ filterName, filterAge }) {
   const [firstInfo, setFirstInfo] = useState(true);
   const [allUsers, setAllUsers] = useState([]);
   const [restUsers, setRestUsers] = useState([]);
@@ -52,11 +52,13 @@ export default function Users({ info }) {
       setAllUsers(undefined);
       setRestUsers(undefined);
     };
-  }, [info]);
+  }, []);
 
   return (
     <div
       id="users-container"
+      name-filter={filterName}
+      age-filter={filterAge}
       columns={columns}
       className="3xs:max-2xs:grid-cols-2 2xs:max-xs:grid-cols-3 xs:max-md:grid-cols-4 md:max-xm:grid-cols-5 xm:max-lg:grid-cols-6 grid grid-cols-1 gap-3 lg:max-xl:grid-cols-7 xl:max-2xl:grid-cols-8 2xl:grid-cols-10"
     >

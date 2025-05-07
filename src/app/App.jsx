@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import Users from "../components/Users";
 import Filter from "../components/Filters";
+import Summary from "../components/Summary";
 
 export default function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState(-1);
 
   const handleChange = (newValue, inputType) => {
-    //show spinner
-    //setIsVisibleSpinner(true);
-
-    //sets filters
+    //Set filters
     let filterName = nameFilter.toLowerCase();
     let filterAge = ageFilter;
     if (inputType === "number") {
@@ -21,9 +19,9 @@ export default function App() {
       setNameFilter(newValue);
     }
 
-    //sets filtered users
-    /*let users = [];
-    if (filterAge === -1 && filterName === '') {
+    //Set filtered users
+    /* let users = [];
+    if (filterAge === -1 && filterName === "") {
       users = allUsers;
     } else {
       users = allUsers.filter(({ nameLower, age }) => {
@@ -33,10 +31,7 @@ export default function App() {
         );
       });
     }
-    setFilteredUsers(users);
-  
-    //hides spinner after sets filtered users
-    setIsVisibleSpinner(false);*/
+    setFilteredUsers(users); */
   };
 
   return (
@@ -49,7 +44,7 @@ export default function App() {
             type="text"
             id="nameFilter"
             label="User Name Filter"
-            help="This filter is case insensitive"
+            help="This filter is not sensitive"
             value={nameFilter}
             onChange={handleChange}
           />
@@ -61,9 +56,10 @@ export default function App() {
             value={ageFilter}
             onChange={handleChange}
           />
+          <Summary />
         </div>
-        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 b-std max-h-64 min-h-32 overflow-x-hidden overflow-y-scroll p-3">
-          <Users />
+        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 b-lr max-h-64 min-h-32 overflow-x-hidden overflow-y-scroll p-3">
+          <Users filterName={nameFilter} filterAge={ageFilter} />
         </div>
       </div>
     </div>
