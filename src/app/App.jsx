@@ -39,12 +39,12 @@ export default function App() {
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
         <h1 className="text-5xl font-bold">{document.title}</h1>
 
-        <div className="b-std my-9 grid w-full grid-cols-1 grid-rows-3 gap-3 p-3 md:grid-cols-3 md:grid-rows-1">
+        <div className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1">
           <Filter
             type="text"
             id="nameFilter"
             label="User Name Filter"
-            help="This filter is not sensitive"
+            help="This filter is case insensitive"
             value={nameFilter}
             onChange={handleChange}
           />
@@ -52,13 +52,13 @@ export default function App() {
             type="number"
             id="ageFilter"
             label="User Age Filter"
-            help="Age '-1' disables this filter"
+            help={`Age "-1" disables this filter`}
             value={ageFilter}
             onChange={handleChange}
           />
           <Summary />
         </div>
-        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 b-lr max-h-64 min-h-32 overflow-x-hidden overflow-y-scroll p-3">
+        <div className="scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-neutral-200 scrollbar-track-neutral-600 b-lr max-h-64 min-h-32 overflow-x-hidden overflow-y-auto p-3">
           <Users filterName={nameFilter} filterAge={ageFilter} />
         </div>
       </div>

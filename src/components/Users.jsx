@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+//import { useState } from "react";
 import Colors from "../helpers/Colors";
 import Names from "../helpers/Names";
 import Columns from "../helpers/Columns";
@@ -22,14 +22,27 @@ const getUsers = () => {
   return users;
 };
 
-export default function Users({ filterName, filterAge }) {
-  const [firstInfo, setFirstInfo] = useState(true);
-  const [allUsers, setAllUsers] = useState([]);
-  const [restUsers, setRestUsers] = useState([]);
+const allUsers = getUsers();
 
+export default function Users({ filterName, filterAge }) {
+  //const [firstInfo, setFirstInfo] = useState(true);
+  //const [allUsers, setAllUsers] = useState([]);
+  //const [restUsers, setRestUsers] = useState([]);
+  //const allUsers = getUsers();
   const columns = Columns();
 
-  useEffect(() => {
+  let users = [];
+  if (filterAge === -1 && filterName === "") {
+    users = allUsers;
+  } else {
+    users = allUsers.filter(({ lower, age }) => {
+      return (
+        lower.includes(filterName) && (filterAge === -1 || age === filterAge)
+      );
+    });
+  }
+  //allUsers ?? setAllUsers(getUsers());
+  /*   useEffect(() => {
     if (firstInfo) {
       // componentDidMount logic - runs only on initial render
       //console.log("Component did mount");
@@ -46,13 +59,13 @@ export default function Users({ filterName, filterAge }) {
 
     // Cleanup function (optional, for componentWillUnmount-like behavior)
     return () => {
-      /* console.log(
-        "Component will unmount or before re-render (if dependencies change)",
-      ); */
+      //console.log(
+      //  "Component will unmount or before re-render (if dependencies change)",
+      //);
       setAllUsers(undefined);
       setRestUsers(undefined);
     };
-  }, []);
+  }, []); */
 
   return (
     <div
@@ -62,7 +75,7 @@ export default function Users({ filterName, filterAge }) {
       columns={columns}
       className="3xs:max-2xs:grid-cols-2 2xs:max-xs:grid-cols-3 xs:max-md:grid-cols-4 md:max-xm:grid-cols-5 xm:max-lg:grid-cols-6 grid grid-cols-1 gap-3 lg:max-xl:grid-cols-7 xl:max-2xl:grid-cols-8 2xl:grid-cols-10"
     >
-      {restUsers.map(({ index, name, age, backgroundColor, lower }) => (
+      {users.map(({ index, name, age, backgroundColor, lower }) => (
         <div
           key={index}
           id={`user-${index}`}
