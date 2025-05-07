@@ -52,7 +52,7 @@ export default function App() {
             type="number"
             id="ageFilter"
             label="User Age Filter"
-            help={`Age "-1" disables this filter`}
+            help="Age '-1' disables this filter"
             value={ageFilter}
             onChange={handleChange}
           />

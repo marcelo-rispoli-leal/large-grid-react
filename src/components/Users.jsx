@@ -3,7 +3,7 @@ import Colors from "../helpers/Colors";
 import Names from "../helpers/Names";
 import Columns from "../helpers/Columns";
 
-const getUsers = () => {
+const getAllUsers = () => {
   const colors = Colors();
   const names = Names();
   const users = [];
@@ -22,8 +22,21 @@ const getUsers = () => {
   return users;
 };
 
-const allUsers = getUsers();
+const allUsers = getAllUsers();
 
+/* const getRestUsers = ({ filterName, filterAge }) => {
+  let users = [];
+  if (filterAge === -1 && filterName === "") {
+    users = allUsers;
+  } else {
+    users = allUsers.filter(({ lower, age }) => {
+      return (
+        lower.includes(filterName) && (filterAge === -1 || age === filterAge)
+      );
+    });
+  }
+};
+ */
 export default function Users({ filterName, filterAge }) {
   //const [firstInfo, setFirstInfo] = useState(true);
   //const [allUsers, setAllUsers] = useState([]);
@@ -33,7 +46,7 @@ export default function Users({ filterName, filterAge }) {
 
   let users = [];
   if (filterAge === -1 && filterName === "") {
-    users = allUsers;
+    users = Object.assign([], allUsers);
   } else {
     users = allUsers.filter(({ lower, age }) => {
       return (
