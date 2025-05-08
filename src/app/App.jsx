@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Users from "../components/Users";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
@@ -12,7 +12,7 @@ const getUsers = () => {
   const users = [];
 
   for (let i = 0; i < names.length; i++) {
-    const age = ~~(Math.random() * 100);
+    const age = ~~(Math.random() * colors.length);
 
     users.push({
       index: i,
@@ -25,22 +25,13 @@ const getUsers = () => {
   return users;
 };
 
+const allUsers = getUsers();
+
 export default function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState(-1);
-  const [allUsers, setAllUsers] = useState([]);
-  const [restUsers, setRestUsers] = useState([]);
+  const [restUsers, setRestUsers] = useState(allUsers);
   const columns = Columns();
-
-  useEffect(() => {
-    const users = getUsers();
-    setAllUsers(users);
-    setRestUsers(users);
-    return () => {
-      setAllUsers([]);
-      setRestUsers([]);
-    };
-  }, []);
 
   const handleChange = (newValue, inputType) => {
     //Set filters
@@ -55,24 +46,22 @@ export default function App() {
     }
 
     //Set filtered users
-    let users = [];
     if (filterAge === -1 && filterName === "") {
-      users = Object.assign([], allUsers);
+      setRestUsers(allUsers);
     } else {
-      users = allUsers.filter(({ lower, age }) => {
+      const users = allUsers.filter(({ lower, age }) => {
         return (
           lower.includes(filterName) && (filterAge === -1 || age === filterAge)
         );
       });
+      setRestUsers(users);
     }
-    setRestUsers(users);
   };
 
   return (
     <div className="dark max-h-full min-h-screen w-full bg-neutral-100 py-9 font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
         <h1 className="text-5xl font-bold">{document.title}</h1>
-
         <div className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1">
           <Filter
             type="text"
