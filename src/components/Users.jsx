@@ -19,10 +19,10 @@ export default function Users({ users }) {
     updateScrollbarVisibility();
 
     // Observe size changes
-    const resizeObserver = new ResizeObserver(updateScrollbarVisibility);
-    resizeObserver.observe(container);
+    const scrollbarObserver = new ResizeObserver(updateScrollbarVisibility);
+    scrollbarObserver.observe(container);
 
-    return () => resizeObserver.disconnect();
+    return () => scrollbarObserver.disconnect();
   }, []);
 
   return (
