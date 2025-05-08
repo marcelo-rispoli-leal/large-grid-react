@@ -1,3 +1,4 @@
+//This function returns the random name for all users
 import { faker } from "@faker-js/faker/locale/pt_BR";
 
 const getNames = () => {

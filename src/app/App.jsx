@@ -2,9 +2,9 @@ import { useState } from "react";
 import Users from "../components/Users";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
+import Columns from "../helpers/Columns";
 import Colors from "../helpers/Colors";
 import Names from "../helpers/Names";
-import Columns from "../helpers/Columns";
 
 const getUsers = () => {
   const colors = Colors();
