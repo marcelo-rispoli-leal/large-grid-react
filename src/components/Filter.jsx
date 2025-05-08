@@ -1,9 +1,16 @@
 import { BsSearch } from "react-icons/bs";
 
+const limit = ~~Number(import.meta.env.VITE_AGE_LIMIT);
+const ageMin = -1;
+const ageMax = limit >= 0 && limit <= 359 ? limit : 99;
+
 export default function Filter({ id, type, label, help, value, onChange }) {
   //change input event
-  const handleChange = (event) => {
-    onChange(event.target.value, event.target.type);
+  const handleChange = ({ target }) => {
+    const { type, value } = target;
+    if (type !== "number" || (~~value >= ageMin && ~~value <= ageMax)) {
+      onChange(type !== "number" ? value : ~~value, type);
+    }
   };
 
   //return component
@@ -15,8 +22,8 @@ export default function Filter({ id, type, label, help, value, onChange }) {
           className="peer f-md b-std order-3 col-start-1 row-2 my-1 w-full py-0 pr-0 pl-9 leading-7.5 focus:ring-1 focus:ring-cyan-600 focus:outline-0"
           type={type}
           value={value}
-          min={type === "number" ? "-1" : undefined}
-          max={type === "number" ? "99" : undefined}
+          min={type === "number" ? ageMin : undefined}
+          max={type === "number" ? ageMax : undefined}
           onChange={handleChange}
         />
         <label htmlFor={id} className="order 1 row-1 peer-focus:text-cyan-600">
