@@ -1,29 +1,42 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
-@plugin 'tailwind-scrollbar' {
-  nocompatible: true;
-  preferredstrategy: "pseudoelements";
-}
+@plugin 'tailwind-scrollbar';
 
 @theme {
+  /* custom breakpoints */
   --breakpoint-3xs: 16rem;
   --breakpoint-2xs: 24rem;
   --breakpoint-xs: 32rem;
   --breakpoint-xm: 56rem;
 }
 
+/* border standard */
 .b-std {
   border: 1px solid var(--color-neutral-500);
   border-radius: 0.75rem;
 }
 
-.b-lr {
-  border: 1px solid var(--color-neutral-500);
-  border-top-left-radius: 0.75rem;
-  border-bottom-left-radius: 0.75rem;
-}
-
+/* font medium */
 .f-md {
   font-size: medium;
   font-weight: 500;
+}
+
+/* users scrollbar */
+.scrollbar-users-container {
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-100);
+    border-radius: 0.5rem;
+  }
+  @supports (-moz-appearance: none) {
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-neutral-100) transparent;
+  }
+  &::-webkit-scrollbar {
+    background-color: var(--color-neutral-500);
+    border-top-right-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+    display: block;
+    width: 8px;
+  }
 }
