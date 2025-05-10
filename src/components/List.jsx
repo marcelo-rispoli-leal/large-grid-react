@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import Item from "./Item";
 
-export default function Users({ users }) {
+export default function List({ items }) {
   const containerRef = useRef(null);
   const [maxHeight, setMaxHeight] = useState("");
 
-  // Calc max height of users container
+  // Calc max height of list container
   useEffect(() => {
     const container = containerRef.current;
 
@@ -12,9 +13,9 @@ export default function Users({ users }) {
 
     const updateMaxHeight = () => {
       const calcMaxHeight =
-        window.innerHeight - container.offsetTop - 36 >= 96
+        window.innerHeight - container.offsetTop - 36 >= 256
           ? window.innerHeight - container.offsetTop - 36
-          : 96;
+          : 256;
       setMaxHeight(calcMaxHeight + "px");
     };
 
@@ -36,16 +37,15 @@ export default function Users({ users }) {
       style={{ maxHeight }}
       className="scrollbar-users-container b-std overflow-y-auto p-3"
     >
-      <div className="3xs:max-2xs:grid-cols-2 2xs:max-xs:grid-cols-3 xs:max-md:grid-cols-4 md:max-xm:grid-cols-5 xm:max-lg:grid-cols-6 grid grid-cols-1 gap-3 lg:max-xl:grid-cols-7 xl:max-2xl:grid-cols-8 2xl:grid-cols-10">
-        {users.map(({ index, name, age, backgroundColor, lower }) => (
-          <div
+      <div className="max-3xs:grid-cols-1 3xs:grid-cols-2 2xs:grid-cols-3 xs:grid-cols-4 xm:grid-cols-6 3xl:grid-cols-15 4xl:grid-cols-20 grid gap-3 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-10">
+        {items.map(({ index, name, age, color, lower }) => (
+          <Item
             key={index}
-            id={`user-${index}`}
-            style={{ backgroundColor }}
-            className="f-md content-center rounded-xl p-1 wrap-anywhere"
+            name={name}
             age={age}
+            backgroundColor={color}
             lower={lower}
-          >{`${name}, ${age}`}</div>
+          />
         ))}
       </div>
     </div>

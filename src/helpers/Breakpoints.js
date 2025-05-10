@@ -1,15 +1,17 @@
 // Media Query for each breakpoint
 export const queries = {
-  "4xs": "(max-width: 255px)",
-  "3xs": "(min-width: 256px) and (max-width: 383px)",
-  "2xs": "(min-width: 384px) and (max-width: 511px)",
-  xs: "(min-width: 512px) and (max-width: 639px)",
-  sm: "(min-width: 640px) and (max-width: 767px)",
-  md: "(min-width: 768px) and (max-width: 895px)",
-  xm: "(min-width: 896px) and (max-width: 1023px)",
-  lg: "(min-width: 1024px) and (max-width: 1279px)",
-  xl: "(min-width: 1280px) and (max-width: 1535px)",
+  "4xs": "not (min-width: 256px)",
+  "3xs": "(min-width: 256px)",
+  "2xs": "(min-width: 384px)",
+  xs: "(min-width: 512px)",
+  sm: "(min-width: 640px)",
+  md: "(min-width: 768px)",
+  xm: "(min-width: 896px)",
+  lg: "(min-width: 1024px)",
+  xl: "(min-width: 1280px)",
   "2xl": "(min-width: 1536px)",
+  "3xl": "(min-width: 2048px)",
+  "4xl": "(min-width: 2560px)",
 };
 
 // Columns quantity for each breakpoint
@@ -24,4 +26,6 @@ export const columns = {
   lg: 7,
   xl: 8,
   "2xl": 10,
+  "3xl": 15,
+  "4xl": 20,
 };

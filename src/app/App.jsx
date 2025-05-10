@@ -1,61 +1,46 @@
 import { useState } from "react";
-import Users from "../components/Users";
+import List from "../components/List";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
 import Columns from "../helpers/Columns";
-import Colors from "../helpers/Colors";
-import Names from "../helpers/Names";
+import Users from "../helpers/Users";
 
-const getUsers = () => {
-  const colors = Colors();
-  const names = Names();
-  const users = [];
-
-  for (let i = 0; i < names.length; i++) {
-    const age = ~~(Math.random() * colors.length);
-
-    users.push({
-      index: i,
-      name: names[i],
-      age,
-      backgroundColor: colors[age],
-      lower: names[i].toLowerCase(),
-    });
-  }
-  return users;
-};
-
-const allUsers = getUsers();
+const allUsers = Users();
 
 export default function App() {
   const [nameFilter, setNameFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState(-1);
   const [restUsers, setRestUsers] = useState(allUsers);
   const columns = Columns();
+  const rest = columns > 0 && restUsers.length % columns > 0 ? 1 : 0;
+  const lines = columns > 0 ? ~~(restUsers.length / columns) + rest : 0;
 
-  const handleChange = (newValue, inputType) => {
-    //Set filters
+  const handleFilterChange = (newValue, inputType) => {
+    // Sets name filter
     let filterName = nameFilter.toLowerCase();
-    let filterAge = ageFilter;
-    if (inputType === "number") {
-      filterAge = +newValue;
-      setAgeFilter(filterAge);
-    } else {
+    if (inputType !== "number") {
       filterName = newValue.toLowerCase();
       setNameFilter(newValue);
     }
 
-    //Set filtered users
-    if (filterAge === -1 && filterName === "") {
-      setRestUsers(allUsers);
-    } else {
-      const users = allUsers.filter(({ lower, age }) => {
-        return (
-          lower.includes(filterName) && (filterAge === -1 || age === filterAge)
-        );
-      });
-      setRestUsers(users);
+    // Sets age filter
+    let filterAge = ageFilter;
+    if (inputType === "number") {
+      filterAge = +newValue;
+      setAgeFilter(filterAge);
     }
+
+    // Returns all users when filters not aplied
+    if (filterAge === -1 && filterName === "") {
+      return setRestUsers(allUsers);
+    }
+
+    // Otherwise, returns filtered users
+    const users = allUsers.filter(
+      ({ lower, age }) =>
+        lower.includes(filterName) && (filterAge === -1 || age === filterAge),
+    );
+    return setRestUsers(users);
   };
 
   return (
@@ -69,7 +54,7 @@ export default function App() {
             label="User Name Filter"
             help="This filter is case insensitive"
             value={nameFilter}
-            onChange={handleChange}
+            onChange={handleFilterChange}
           />
           <Filter
             type="number"
@@ -77,11 +62,11 @@ export default function App() {
             label="User Age Filter"
             help="Age '-1' disables this filter"
             value={ageFilter}
-            onChange={handleChange}
+            onChange={handleFilterChange}
           />
-          <Summary users={restUsers.length} columns={columns} />
+          <Summary count={restUsers.length} lines={lines} />
         </div>
-        {restUsers.length > 0 && <Users users={restUsers} />}
+        {restUsers.length > 0 && <List items={restUsers} />}
       </div>
     </div>
   );
