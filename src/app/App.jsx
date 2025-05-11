@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import List from "../components/List";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
