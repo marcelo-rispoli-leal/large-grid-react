@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import List from "../components/List";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
@@ -8,15 +8,20 @@ import Users from "../helpers/Users";
 
 const allUsers = Users();
 
+// Constantes nomeadas
+const DEFAULT_AGE_FILTER = -1;
+const DEFAULT_NAME_FILTER = "";
+const MIN_LINES = 0;
+const MIN_COLUMNS = 0;
+const REST_DIVISOR = 1;
+
 export default function App() {
-  const [nameFilter, setNameFilter] = useState("");
-  const [ageFilter, setAgeFilter] = useState(-1);
+  const [nameFilter, setNameFilter] = useState(DEFAULT_NAME_FILTER);
+  const [ageFilter, setAgeFilter] = useState(DEFAULT_AGE_FILTER);
   const [restUsers, setRestUsers] = useState(allUsers);
   const columns = Columns();
-  const rest = columns > 0 && restUsers.length % columns > 0 ? 1 : 0;
-  const lines = columns > 0 ? ~~(restUsers.length / columns) + rest : 0;
 
-  const handleFilterChange = (newValue, inputType) => {
+  const handleFilterChange = useCallback((newValue, inputType) => {
     // Sets name filter
     let filterName = nameFilter.toLowerCase();
     if (inputType !== "number") {
@@ -31,18 +36,24 @@ export default function App() {
       setAgeFilter(filterAge);
     }
 
-    // Returns all users when filters not aplied
-    if (filterAge === -1 && filterName === "") {
+    // Returns all users when filters not applied
+    if (filterAge === DEFAULT_AGE_FILTER && filterName === DEFAULT_NAME_FILTER) {
       return setRestUsers(allUsers);
     }
 
     // Otherwise, returns filtered users
     const users = allUsers.filter(
       ({ lower, age }) =>
-        lower.includes(filterName) && (filterAge === -1 || age === filterAge),
+        lower.includes(filterName) && (filterAge === DEFAULT_AGE_FILTER || age === filterAge),
     );
     return setRestUsers(users);
-  };
+  }, [nameFilter, ageFilter]);
+
+  const { lines, rest } = useMemo(() => {
+    const rest = columns > MIN_COLUMNS && restUsers.length % columns > MIN_COLUMNS ? REST_DIVISOR : MIN_COLUMNS;
+    const lines = columns > MIN_COLUMNS ? ~~(restUsers.length / columns) + rest : MIN_LINES;
+    return { lines, rest };
+  }, [columns, restUsers.length]);
 
   return (
     <div className="max-h-full min-h-[100svh] w-full bg-neutral-100 pt-4.5 font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
@@ -53,7 +64,7 @@ export default function App() {
           </div>
         </div>
         <h1 className="text-5xl font-bold">{document.title}</h1>
-        <div className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1">
+        <div className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1" role="region" aria-label="Filtros e Resumo">
           <Filter
             type="text"
             id="nameFilter"
