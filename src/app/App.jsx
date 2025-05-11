@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import List from "../components/List";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
+import Toggle from "../components/Toggle";
 import Columns from "../helpers/Columns";
 import Users from "../helpers/Users";
 
@@ -45,8 +45,13 @@ export default function App() {
   };
 
   return (
-    <div className="dark max-h-full min-h-[100svh] w-full bg-neutral-100 py-9 font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
+    <div className="max-h-full min-h-[100svh] w-full bg-neutral-100 pt-4.5 font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
+        <div className="relative pb-12">
+          <div className="absolute top-0 right-0">
+            <Toggle />
+          </div>
+        </div>
         <h1 className="text-5xl font-bold">{document.title}</h1>
         <div className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1">
           <Filter
@@ -69,7 +74,6 @@ export default function App() {
         </div>
         {restUsers.length > 0 && <List items={restUsers} />}
       </div>
-      <SpeedInsights />
     </div>
   );
 }

@@ -1,6 +1,18 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
+    <script>
+      // Verifica se o usuário prefere o tema escuro ou se já havia escolhido o tema escuro anteriormente
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link href="/src/index.css" rel="stylesheet" />
