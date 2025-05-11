@@ -1,4 +1,5 @@
 import { BsSearch } from "react-icons/bs";
+import Stepper from "./Stepper";
 
 const limit = ~~Number(import.meta.env.VITE_AGE_LIMIT);
 const ageMin = -1;
@@ -19,7 +20,7 @@ export default function Filter({ id, type, label, help, value, onChange }) {
       <div className="grid items-center">
         <input
           id={id}
-          className="peer f-md b-std order-3 col-start-1 row-2 my-1 w-full py-0 pr-0 pl-9 leading-7.5 focus:ring-1 focus:ring-cyan-700 focus:outline-0"
+          className="peer f-md b-std order-3 col-start-1 row-2 my-1 w-full [appearance:textfield] py-0 pr-0 pl-9 leading-7.5 [-moz-appearance:textfield] focus:ring-1 focus:ring-cyan-700 focus:outline-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           type={type}
           value={value}
           min={type === "number" ? ageMin : undefined}
@@ -30,7 +31,15 @@ export default function Filter({ id, type, label, help, value, onChange }) {
           {label}
         </label>
         <BsSearch className="f-md order-2 col-start-1 row-2 ml-3 peer-focus:text-cyan-700" />
-        <span className="order-4 row-3 text-sm peer-focus:text-cyan-700">
+        {type === "number" && (
+          <Stepper
+            value={value}
+            onChange={onChange}
+            min={ageMin}
+            max={ageMax}
+          />
+        )}
+        <span className="order-5 row-3 text-sm peer-focus:text-cyan-700">
           {help}
         </span>
       </div>
