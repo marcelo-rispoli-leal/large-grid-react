@@ -26,19 +26,25 @@
 
 /* users scrollbar */
 .scrollbar-users-container {
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-neutral-100);
-    border-radius: 0.5rem;
-  }
-  @supports (-moz-appearance: none) {
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-neutral-100) transparent;
-  }
   &::-webkit-scrollbar {
     background-color: var(--color-neutral-500);
     border-top-right-radius: 0.75rem;
     border-bottom-right-radius: 0.75rem;
     display: block;
     width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-900);
+    border-radius: 0.5rem;
+  }
+  .dark &::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-100);
+  }
+  @supports (-moz-appearance: none) {
+    scrollbar-width: auto;
+    scrollbar-color: var(--color-neutral-900) transparent;
+    .dark & {
+      scrollbar-color: var(--color-neutral-100) transparent;
+    }
   }
 }
