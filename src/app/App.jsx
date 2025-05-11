@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
+import { SpeedInsights } from "@vercel/speed-insights";
 import List from "../components/List";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
@@ -7,6 +7,7 @@ import Columns from "../helpers/Columns";
 import Users from "../helpers/Users";
 
 const allUsers = Users();
+SpeedInsights.injectSpeedInsights();
 
 export default function App() {
   const [nameFilter, setNameFilter] = useState("");
