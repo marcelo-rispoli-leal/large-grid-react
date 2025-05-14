@@ -1,63 +1,20 @@
-import { useState, useCallback } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "../components/NavBar";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
 import Grid from "../components/Grid";
+import useGridFilters from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
-import Users from "../helpers/Users";
-
-const allUsers = Users();
-
-// Named constants
-const DEFAULT_AGE_FILTER = -1;
-const DEFAULT_NAME_FILTER = "";
 
 export default function App() {
-  const [nameFilter, setNameFilter] = useState(DEFAULT_NAME_FILTER);
-  const [ageFilter, setAgeFilter] = useState(DEFAULT_AGE_FILTER);
-  const [restUsers, setRestUsers] = useState(allUsers);
+  const { nameFilter, ageFilter, restUsers, handleFilterChange } =
+    useGridFilters();
 
-  // Calculate number of columns and lines
+  // Retrieve number of columns and lines
   const columns = useGridColumns();
   const { lines } = useGridLines(columns, restUsers.length);
-
-  const handleFilterChange = useCallback(
-    (newValue, inputType) => {
-      // Sets name filter
-      let filterName = nameFilter.toLowerCase();
-      if (inputType !== "number") {
-        filterName = newValue.toLowerCase();
-        setNameFilter(newValue);
-      }
-
-      // Sets age filter
-      let filterAge = ageFilter;
-      if (inputType === "number") {
-        filterAge = +newValue;
-        setAgeFilter(filterAge);
-      }
-
-      // Returns all users when filters not applied
-      if (
-        filterAge === DEFAULT_AGE_FILTER &&
-        filterName === DEFAULT_NAME_FILTER
-      ) {
-        return setRestUsers(allUsers);
-      }
-
-      // Otherwise, returns filtered users
-      const users = allUsers.filter(
-        ({ lower, age }) =>
-          lower.includes(filterName) &&
-          (filterAge === DEFAULT_AGE_FILTER || age === filterAge),
-      );
-      return setRestUsers(users);
-    },
-    [nameFilter, ageFilter],
-  );
 
   return (
     <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 py-6 font-sans text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
