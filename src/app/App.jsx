@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import List from "../components/List";
 import Filter from "../components/Filter";
@@ -101,6 +102,7 @@ export default function App() {
         </div>
         {restUsers.length > 0 && <List items={restUsers} />}
       </div>
+      <Analytics />
       <SpeedInsights />
     </div>
   );
