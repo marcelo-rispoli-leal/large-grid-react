@@ -1,16 +1,16 @@
 import { useState, useCallback, useMemo } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import List from "../components/List";
+import NavBar from "../components/NavBar";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
-import Toggle from "../components/Toggle";
+import List from "../components/List";
 import Columns from "../helpers/Columns";
 import Users from "../helpers/Users";
 
 const allUsers = Users();
 
-// Constantes nomeadas
+// Named constants
 const DEFAULT_AGE_FILTER = -1;
 const DEFAULT_NAME_FILTER = "";
 const MIN_LINES = 0;
@@ -58,6 +58,7 @@ export default function App() {
     [nameFilter, ageFilter],
   );
 
+  // Calculate number of lines
   const { lines } = useMemo(() => {
     const rest =
       columns > MIN_COLUMNS && restUsers.length % columns > MIN_COLUMNS
@@ -65,18 +66,16 @@ export default function App() {
         : MIN_COLUMNS;
     const lines =
       columns > MIN_COLUMNS ? ~~(restUsers.length / columns) + rest : MIN_LINES;
-    return { lines, rest };
+    return { lines };
   }, [columns, restUsers.length]);
 
   return (
-    <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 pt-4.5 font-sans text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
+    <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 py-6 font-sans text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
-        <div className="relative pb-12">
-          <div className="absolute top-0 right-0">
-            <Toggle />
-          </div>
+        <div className="relative pb-10">
+          <NavBar />
         </div>
-        <h1 className="text-5xl font-bold">{document.title}</h1>
+        <h1 className="mt-6 text-5xl font-bold">{document.title}</h1>
         <div
           className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1"
           role="region"

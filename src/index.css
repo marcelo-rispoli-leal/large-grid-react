@@ -23,7 +23,12 @@
   font-weight: 500;
 }
 
-/* Reset scrollbar styles */
+/* link icon size */
+a svg {
+  font-size: 1.25rem;
+}
+
+/* scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -38,5 +43,5 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-neutral-700);
+  background: var(--color-cyan-700);
 }

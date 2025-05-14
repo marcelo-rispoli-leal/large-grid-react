@@ -13,9 +13,9 @@ export default function List({ items }) {
 
     const updateMaxHeight = () => {
       const calcMaxHeight =
-        window.innerHeight - container.offsetTop - 36 >= 240
-          ? window.innerHeight - container.offsetTop - 36
-          : 240;
+        window.innerHeight - container.offsetTop - 24 >= 192
+          ? window.innerHeight - container.offsetTop - 24
+          : 192;
       setMaxHeight(calcMaxHeight + "px");
     };
 
