@@ -1,11 +1,12 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "../components/NavBar";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
 import List from "../components/List";
-import Columns from "../helpers/Columns";
+import useGridColumns from "../hooks/useGridColumns";
+import useGridLines from "../hooks/useGridLines";
 import Users from "../helpers/Users";
 
 const allUsers = Users();
@@ -13,15 +14,15 @@ const allUsers = Users();
 // Named constants
 const DEFAULT_AGE_FILTER = -1;
 const DEFAULT_NAME_FILTER = "";
-const MIN_LINES = 0;
-const MIN_COLUMNS = 0;
-const REST_DIVISOR = 1;
 
 export default function App() {
   const [nameFilter, setNameFilter] = useState(DEFAULT_NAME_FILTER);
   const [ageFilter, setAgeFilter] = useState(DEFAULT_AGE_FILTER);
   const [restUsers, setRestUsers] = useState(allUsers);
-  const columns = Columns();
+
+  // Calculate number of columns and lines
+  const columns = useGridColumns();
+  const { lines } = useGridLines(columns, restUsers.length);
 
   const handleFilterChange = useCallback(
     (newValue, inputType) => {
@@ -57,17 +58,6 @@ export default function App() {
     },
     [nameFilter, ageFilter],
   );
-
-  // Calculate number of lines
-  const { lines } = useMemo(() => {
-    const rest =
-      columns > MIN_COLUMNS && restUsers.length % columns > MIN_COLUMNS
-        ? REST_DIVISOR
-        : MIN_COLUMNS;
-    const lines =
-      columns > MIN_COLUMNS ? ~~(restUsers.length / columns) + rest : MIN_LINES;
-    return { lines };
-  }, [columns, restUsers.length]);
 
   return (
     <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 py-6 font-sans text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
