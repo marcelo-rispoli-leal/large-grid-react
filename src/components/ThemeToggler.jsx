@@ -1,7 +1,7 @@
 import { BsSun, BsMoon } from "react-icons/bs";
 import { useTheme } from "../hooks/useTheme";
 
-export default function ToggleTheme() {
+export default function ThemeToggler() {
   const { isDarkTheme, toggleTheme } = useTheme();
 
   return (
