@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Item from "./Item";
 
-export default function List({ items }) {
+export default function Grid({ items }) {
   const containerRef = useRef(null);
   const [maxHeight, setMaxHeight] = useState("");
 
-  // Calc max height of list container
+  // Calculate max height of grid container
   useEffect(() => {
     const container = containerRef.current;
 
@@ -19,7 +19,7 @@ export default function List({ items }) {
       setMaxHeight(calcMaxHeight + "px");
     };
 
-    // Initial calc
+    // Initial calculation
     updateMaxHeight();
 
     // Observe size changes

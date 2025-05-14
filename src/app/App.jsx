@@ -4,7 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "../components/NavBar";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
-import List from "../components/List";
+import Grid from "../components/Grid";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
 import Users from "../helpers/Users";
@@ -89,7 +89,7 @@ export default function App() {
           />
           <Summary count={restUsers.length} lines={lines} />
         </div>
-        {restUsers.length > 0 && <List items={restUsers} />}
+        {restUsers.length > 0 && <Grid items={restUsers} />}
       </div>
       <Analytics />
       <SpeedInsights />
