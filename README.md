@@ -1,12 +1,12 @@
 # large-grid-vite-react
 
-This project renders a React table displaying name and age for multiple random users generated with @FakerJS as defined in environment variables. The implementation includes filtering capabilities by name or age.
+This project renders a React grid displaying name and age for multiple random users generated with @FakerJS as defined in environment variables. The implementation includes filtering capabilities by name or age.
 
 ## Styling Technique Highlights
 
 This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 
-- **Dynamic HSL color generation** - Each cell receives a unique dark background color calculated from the user's random age, ensuring optimal contrast with light text.
+- **Dynamic HSL color generation** - Each cell receives a unique dark background color calculated according the user's random age, ensuring optimal contrast with light text.
 - **Responsive height calculation** - The grid automatically adjusts its maximum height based on viewport dimensions using custom hooks.
 
 ## Key improvements in this version:
@@ -21,7 +21,7 @@ This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 ## Technologies used:
 
 - **Rendering:** React + Vite
-- **Styling:** Tailwind CSS + Random HSL color generation + Dynamic maximum height calculation
+- **Styling:** Tailwind CSS + Random HSL color generation + Responsive height calculation
 - **State management:** Custom hooks
 - **Analytics:** Vercel Analytics
 
