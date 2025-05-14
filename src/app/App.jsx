@@ -9,12 +9,12 @@ import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
 
 export default function App() {
-  const { nameFilter, ageFilter, restUsers, handleFilterChange } =
+  const { nameFilter, ageFilter, filteredUsers, handleFilterChange } =
     useGridFilters();
 
   // Retrieve number of columns and lines
   const columns = useGridColumns();
-  const { lines } = useGridLines(columns, restUsers.length);
+  const { lines } = useGridLines(columns, filteredUsers.length);
 
   return (
     <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 py-6 font-sans text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
@@ -44,9 +44,9 @@ export default function App() {
             value={ageFilter}
             onChange={handleFilterChange}
           />
-          <Summary count={restUsers.length} lines={lines} />
+          <Summary count={filteredUsers.length} lines={lines} />
         </div>
-        {restUsers.length > 0 && <Grid items={restUsers} />}
+        {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
       </div>
       <Analytics />
       <SpeedInsights />

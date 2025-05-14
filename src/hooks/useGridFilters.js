@@ -10,7 +10,7 @@ export const DEFAULT_NAME_FILTER = "";
 export default function useGridFilters() {
   const [nameFilter, setNameFilter] = useState(DEFAULT_NAME_FILTER);
   const [ageFilter, setAgeFilter] = useState(DEFAULT_AGE_FILTER);
-  const [restUsers, setRestUsers] = useState(allUsers);
+  const [filteredUsers, setFilteredUsers] = useState(allUsers);
 
   const handleFilterChange = useCallback(
     (newValue, inputType) => {
@@ -33,7 +33,7 @@ export default function useGridFilters() {
         filterAge === DEFAULT_AGE_FILTER &&
         filterName === DEFAULT_NAME_FILTER
       ) {
-        return setRestUsers(allUsers);
+        return setFilteredUsers(allUsers);
       }
 
       // Otherwise, returns filtered users
@@ -42,7 +42,7 @@ export default function useGridFilters() {
           lower.includes(filterName) &&
           (filterAge === DEFAULT_AGE_FILTER || age === filterAge),
       );
-      return setRestUsers(users);
+      return setFilteredUsers(users);
     },
     [nameFilter, ageFilter],
   );
@@ -50,10 +50,10 @@ export default function useGridFilters() {
   return {
     nameFilter,
     ageFilter,
-    restUsers,
+    filteredUsers,
     handleFilterChange,
     setNameFilter,
     setAgeFilter,
-    setRestUsers,
+    setFilteredUsers,
   };
 }

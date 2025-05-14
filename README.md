@@ -1,12 +1,40 @@
-# React + Vite
+# large-grid-vite-react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project renders a React table displaying name and age for multiple random users generated with @FakerJS as defined in environment variables. The implementation includes filtering capabilities by name or age.
 
-Currently, two official plugins are available:
+## Styling Technique Highlights
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 
-## Expanding the ESLint configuration
+- **Dynamic HSL color generation** - Each cell receives a unique dark background color calculated from the user's random age, ensuring optimal contrast with light text.
+- **Responsive height calculation** - The grid automatically adjusts its maximum height based on viewport dimensions using custom hooks.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Key improvements in this version:
+
+- Migration to Vite as build tool
+- Complete architecture refactor with custom hooks
+- Integrated dark/light theme system
+- Enhanced responsive layout
+- Integration with Vercel Analytics
+- Improved accessibility
+
+## Technologies used:
+
+- **Rendering:** React + Vite
+- **Styling:** Tailwind CSS + Random HSL color generation + Dynamic maximum height calculation
+- **State management:** Custom hooks
+- **Analytics:** Vercel Analytics
+
+## Live demo:
+
+The project is available at `https://large-grid-vite-react.vercel.app/`
+
+## Next steps:
+
+- Mobile experience improvements
+- Additional filters
+- Data export functionality
+- Automated testing
+- Lazy loading implementation
+
+Contributions are welcome! Please open an issue if you encounter any problems or have suggestions for improvement.
