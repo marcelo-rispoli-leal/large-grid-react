@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import List from "../components/List";
 import Filter from "../components/Filter";
 import Summary from "../components/Summary";
@@ -21,42 +22,53 @@ export default function App() {
   const [restUsers, setRestUsers] = useState(allUsers);
   const columns = Columns();
 
-  const handleFilterChange = useCallback((newValue, inputType) => {
-    // Sets name filter
-    let filterName = nameFilter.toLowerCase();
-    if (inputType !== "number") {
-      filterName = newValue.toLowerCase();
-      setNameFilter(newValue);
-    }
+  const handleFilterChange = useCallback(
+    (newValue, inputType) => {
+      // Sets name filter
+      let filterName = nameFilter.toLowerCase();
+      if (inputType !== "number") {
+        filterName = newValue.toLowerCase();
+        setNameFilter(newValue);
+      }
 
-    // Sets age filter
-    let filterAge = ageFilter;
-    if (inputType === "number") {
-      filterAge = +newValue;
-      setAgeFilter(filterAge);
-    }
+      // Sets age filter
+      let filterAge = ageFilter;
+      if (inputType === "number") {
+        filterAge = +newValue;
+        setAgeFilter(filterAge);
+      }
 
-    // Returns all users when filters not applied
-    if (filterAge === DEFAULT_AGE_FILTER && filterName === DEFAULT_NAME_FILTER) {
-      return setRestUsers(allUsers);
-    }
+      // Returns all users when filters not applied
+      if (
+        filterAge === DEFAULT_AGE_FILTER &&
+        filterName === DEFAULT_NAME_FILTER
+      ) {
+        return setRestUsers(allUsers);
+      }
 
-    // Otherwise, returns filtered users
-    const users = allUsers.filter(
-      ({ lower, age }) =>
-        lower.includes(filterName) && (filterAge === DEFAULT_AGE_FILTER || age === filterAge),
-    );
-    return setRestUsers(users);
-  }, [nameFilter, ageFilter]);
+      // Otherwise, returns filtered users
+      const users = allUsers.filter(
+        ({ lower, age }) =>
+          lower.includes(filterName) &&
+          (filterAge === DEFAULT_AGE_FILTER || age === filterAge),
+      );
+      return setRestUsers(users);
+    },
+    [nameFilter, ageFilter],
+  );
 
-  const { lines, rest } = useMemo(() => {
-    const rest = columns > MIN_COLUMNS && restUsers.length % columns > MIN_COLUMNS ? REST_DIVISOR : MIN_COLUMNS;
-    const lines = columns > MIN_COLUMNS ? ~~(restUsers.length / columns) + rest : MIN_LINES;
+  const { lines } = useMemo(() => {
+    const rest =
+      columns > MIN_COLUMNS && restUsers.length % columns > MIN_COLUMNS
+        ? REST_DIVISOR
+        : MIN_COLUMNS;
+    const lines =
+      columns > MIN_COLUMNS ? ~~(restUsers.length / columns) + rest : MIN_LINES;
     return { lines, rest };
   }, [columns, restUsers.length]);
 
   return (
-    <div className="max-h-full min-h-[100svh] w-full bg-neutral-100 pt-4.5 font-sans text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
+    <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 pt-4.5 font-sans text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200">
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
         <div className="relative pb-12">
           <div className="absolute top-0 right-0">
@@ -64,7 +76,11 @@ export default function App() {
           </div>
         </div>
         <h1 className="text-5xl font-bold">{document.title}</h1>
-        <div className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1" role="region" aria-label="Filtros e Resumo">
+        <div
+          className="b-std my-9 grid w-full gap-3 p-3 md:grid-cols-3 md:grid-rows-1"
+          role="region"
+          aria-label="Filters and Summary"
+        >
           <Filter
             type="text"
             id="nameFilter"
@@ -85,6 +101,7 @@ export default function App() {
         </div>
         {restUsers.length > 0 && <List items={restUsers} />}
       </div>
+      <SpeedInsights />
     </div>
   );
 }

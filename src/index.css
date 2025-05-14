@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
-@plugin 'tailwind-scrollbar';
 
 @theme {
   /* custom breakpoints */
@@ -24,27 +23,21 @@
   font-weight: 500;
 }
 
-/* users scrollbar */
-.scrollbar-users-container {
-  &::-webkit-scrollbar {
-    background-color: var(--color-neutral-500);
-    border-top-right-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
-    display: block;
-    width: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--color-neutral-900);
-    border-radius: 0.5rem;
-  }
-  .dark &::-webkit-scrollbar-thumb {
-    background-color: var(--color-neutral-100);
-  }
-  @supports (-moz-appearance: none) {
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-neutral-900) transparent;
-    .dark & {
-      scrollbar-color: var(--color-neutral-100) transparent;
-    }
-  }
+/* Reset scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
 }
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-500);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-700);
+}
+
