@@ -1,6 +1,6 @@
 import { BsEnvelope, BsGithub, BsLinkedin } from "react-icons/bs";
 import IconLink from "./IconLink";
-import Toggle from "./Toggle";
+import ToggleTheme from "./ToggleTheme";
 
 //prettier-ignore
 const { VITE_EMAIL_LINK, VITE_GITHUB_LINK, VITE_LINKEDIN_LINK } = import.meta.env;
@@ -17,7 +17,7 @@ export default function NavBar() {
       {VITE_LINKEDIN_LINK && (
         <IconLink icon={<BsLinkedin />} link={VITE_LINKEDIN_LINK} />
       )}
-      <Toggle />
+      <ToggleTheme />
     </div>
   );
 }
