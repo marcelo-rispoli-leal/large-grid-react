@@ -6,15 +6,16 @@ This project renders a React grid displaying name and age for multiple random us
 
 This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 
-- **Dynamic HSL color generation** - Each cell receives a unique dark background color calculated according the user's random age, ensuring optimal contrast with light text.
-- **Responsive height calculation** - The grid automatically adjusts its maximum height based on viewport dimensions using custom hooks.
+- **Dynamic HSL color generation** - Each cell receives a dark background color based on the user's age, ensuring optimal contrast with light text.
+- **Responsive height calculation** - The grid automatically adjusts its maximum height based on viewport dimensions.
 
 ## Key improvements in this version:
 
-- Migration to Vite as build tool
-- Complete architecture refactor with custom hooks
-- Integrated dark/light theme system
-- Enhanced responsive layout
+- Migration to Vite as build tool.
+- Creation of a custom Stepper button on the numeric input element to increase/decrease the age of filtered users.
+- Complete architecture refactor using React Hooks useContext, useCallback, useMemo, useState, useEffect and useRef.
+- Enhanced responsive layout.
+- Integrated dark/light theme system.
 - Integration with Vercel Analytics
 - Improved accessibility
 
@@ -27,7 +28,7 @@ This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 
 ## Live demo:
 
-The project is available at `https://large-grid-vite-react.vercel.app/`
+The project is available at https://large-grid-vite-react.vercel.app/.
 
 ## Next steps:
 
