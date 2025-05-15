@@ -16,11 +16,15 @@ export default function Filter({ id, type, label, help, value, onChange }) {
 
   //return component
   return (
-    <div className="b-std p-3 transition-all duration-300 ease-in-out" role="group" aria-labelledby={`${id}-label`}>
+    <div
+      className="b-std p-3 transition-all"
+      role="group"
+      aria-labelledby={`${id}-label`}
+    >
       <div className="grid items-center">
         <input
           id={id}
-          className="peer f-md b-std order-3 col-start-1 row-2 my-1 w-full [appearance:textfield] py-0 pr-0 pl-9 leading-7.5 [-moz-appearance:textfield] focus:ring-1 focus:ring-cyan-700 focus:outline-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none transition-all duration-300 ease-in-out"
+          className="peer f-md b-std order-3 col-start-1 row-2 my-1 w-full [appearance:textfield] py-0 pr-0 pl-9 leading-7.5 transition-colors [-moz-appearance:textfield] focus:ring-1 focus:ring-cyan-700 focus:outline-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           type={type}
           value={value}
           min={type === "number" ? ageMin : undefined}
@@ -28,10 +32,17 @@ export default function Filter({ id, type, label, help, value, onChange }) {
           onChange={handleChange}
           aria-describedby={`${id}-help`}
         />
-        <label id={`${id}-label`} htmlFor={id} className="order 1 row-1 peer-focus:text-cyan-700 transition-colors duration-300">
+        <label
+          id={`${id}-label`}
+          htmlFor={id}
+          className="order 1 row-1 transition-colors peer-focus:text-cyan-700"
+        >
           {label}
         </label>
-        <BsSearch className="f-md order-2 col-start-1 row-2 ml-3 peer-focus:text-cyan-700 transition-colors duration-300" aria-hidden="true" />
+        <BsSearch
+          className="f-md order-2 col-start-1 row-2 ml-3 transition-colors peer-focus:text-cyan-700"
+          aria-hidden="true"
+        />
         {type === "number" && (
           <Stepper
             value={value}
@@ -40,7 +51,10 @@ export default function Filter({ id, type, label, help, value, onChange }) {
             max={ageMax}
           />
         )}
-        <span id={`${id}-help`} className="order-5 row-3 text-sm peer-focus:text-cyan-700 transition-colors duration-300">
+        <span
+          id={`${id}-help`}
+          className="order-5 row-3 text-sm transition-colors peer-focus:text-cyan-700"
+        >
           {help}
         </span>
       </div>

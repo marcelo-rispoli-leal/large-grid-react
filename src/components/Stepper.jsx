@@ -19,6 +19,7 @@ export default function Stepper({ value, onChange, min, max }) {
     <div className="order-4 col-start-1 row-2 mr-2 grid h-7.5 w-4 grid-cols-1 grid-rows-2 items-center gap-0.5 justify-self-end bg-transparent p-0.5">
       <button
         className="cursor-pointer border-none bg-transparent p-0 transition-colors hover:bg-cyan-700"
+        role="spinbutton"
         aria-label="Increment"
         onClick={handleIncrement}
       >

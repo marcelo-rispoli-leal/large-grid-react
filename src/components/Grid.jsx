@@ -8,11 +8,11 @@ export default function Grid({ cells }) {
     <div
       ref={gridRef}
       style={{ maxHeight }}
-      className="b-std overflow-y-auto p-3 transition-all duration-300 ease-in-out"
+      className={`b-std overflow-y-auto p-3 ${!maxHeight && "invisible"}`}
       role="list"
       aria-label="Users grid"
     >
-      <div className="max-3xs:grid-cols-1 3xs:grid-cols-2 2xs:grid-cols-3 xs:grid-cols-4 xm:grid-cols-6 3xl:grid-cols-15 4xl:grid-cols-20 grid gap-3 text-neutral-200 transition-all duration-300 ease-in-out md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-10">
+      <div className="max-3xs:grid-cols-1 3xs:grid-cols-2 2xs:grid-cols-3 xs:grid-cols-4 xm:grid-cols-6 3xl:grid-cols-15 4xl:grid-cols-20 grid gap-3 text-neutral-200 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 2xl:grid-cols-10">
         {cells.map(({ index, name, age, color, lower }) => (
           <Cell
             key={index}

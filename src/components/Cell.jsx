@@ -4,9 +4,9 @@ export default function Cell({ index, name, age, backgroundColor, lower }) {
       key={index}
       id={`user-${index}`}
       style={{ backgroundColor }}
-      className="f-md content-center rounded-xl p-1 wrap-anywhere transition-all duration-300 ease-in-out"
-      role="gridcell"
-      aria-label={`User ${name}, ${age} anos`}
+      className="f-md content-center rounded-xl p-1 wrap-anywhere"
+      role="listitem"
+      aria-label={`User ${name}, ${age} years`}
       age={age}
       lower={lower}
     >{`${name}, ${age}`}</div>

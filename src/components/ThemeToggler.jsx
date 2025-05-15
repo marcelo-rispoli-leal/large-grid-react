@@ -7,15 +7,16 @@ export default function ThemeToggler() {
   return (
     <button
       onClick={toggleTheme}
-      className="b-std p-2 transition-all duration-300 ease-in-out hover:bg-cyan-700"
+      className="b-std p-2 transition-colors hover:bg-cyan-700"
+      role="switch"
       aria-label={
-        isDarkTheme ? "Mudar para tema claro" : "Mudar para tema escuro"
+        isDarkTheme ? "Switch to light theme" : "Switch to dark theme"
       }
     >
       {isDarkTheme ? (
-        <BsSun className="h-5 w-5 transition-all duration-300 ease-in-out" />
+        <BsSun className="h-5 w-5" />
       ) : (
-        <BsMoon className="h-5 w-5 transition-all duration-300 ease-in-out" />
+        <BsMoon className="h-5 w-5" />
       )}
     </button>
   );
