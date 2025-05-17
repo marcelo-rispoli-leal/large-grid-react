@@ -1,0 +1,23 @@
+import { BsSun, BsMoon } from "react-icons/bs";
+import { useTheme } from "../hooks/useTheme";
+
+export default function ThemeToggler() {
+  const { isDarkTheme, toggleTheme } = useTheme();
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="b-std p-2 transition-colors hover:bg-cyan-700"
+      role="switch"
+      aria-label={
+        isDarkTheme ? "Switch to light theme" : "Switch to dark theme"
+      }
+    >
+      {isDarkTheme ? (
+        <BsSun className="h-5 w-5" />
+      ) : (
+        <BsMoon className="h-5 w-5" />
+      )}
+    </button>
+  );
+}
