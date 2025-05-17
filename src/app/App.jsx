@@ -45,13 +45,12 @@ export default function App() {
           />
           <Summary count={filteredUsers.length} lines={lines} />
         </div>
-        {filteredUsers.length > 0 && lines === 0 ? (
+        {filteredUsers.length > 0 && lines === 0 && (
           <div className="flex justify-center py-12">
             <BsArrowRepeat className="h-12 w-12 animate-spin text-cyan-700" />
           </div>
-        ) : (
-          <Grid cells={filteredUsers} />
         )}
+        {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
       </div>
       <Analytics />
       <SpeedInsights />
