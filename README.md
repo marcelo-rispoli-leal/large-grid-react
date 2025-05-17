@@ -1,4 +1,4 @@
-# large-grid-vite-react
+# large-grid-react
 
 This project renders a React grid displaying name and age for multiple random users generated with @FakerJS as defined in environment variables. The implementation includes filtering capabilities by name or age.
 
