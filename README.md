@@ -30,12 +30,16 @@ This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 
 The project is available at https://large-grid-vite-react.vercel.app/.
 
-## Next steps:
+## Installation
 
-- Mobile experience improvements
-- Additional filters
-- Data export functionality
-- Automated testing
-- Lazy loading implementation
+To run the project locally, follow these steps:
+
+1. Clone the repository: `git clone  Installation`
+2. Install dependencies: `npm install`
+3. Adjust the environment variables in the .env file.
+4. Start the development server: `npm run dev`
+5. Open your browser and navigate to URL provided by Vite.
+
+## Contributing
 
 Contributions are welcome! Please open an issue if you encounter any problems or have suggestions for improvement.

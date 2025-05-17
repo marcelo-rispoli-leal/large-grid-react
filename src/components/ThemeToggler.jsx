@@ -7,7 +7,7 @@ export default function ThemeToggler() {
   return (
     <button
       onClick={toggleTheme}
-      className="b-std p-2 transition-colors hover:bg-cyan-700"
+      className="b-std bg-neutral-300 p-2 transition-colors hover:bg-cyan-700 dark:bg-neutral-700"
       role="switch"
       aria-label={
         isDarkTheme ? "Switch to light theme" : "Switch to dark theme"

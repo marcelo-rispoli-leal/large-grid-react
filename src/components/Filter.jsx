@@ -17,14 +17,14 @@ export default function Filter({ id, type, label, help, value, onChange }) {
   //return component
   return (
     <div
-      className="b-std p-3 transition-all"
+      className="b-std bg-neutral-200 p-3 transition-colors dark:bg-neutral-800"
       role="group"
       aria-labelledby={`${id}-label`}
     >
-      <div className="grid items-center">
+      <div className="grid items-center transition-colors">
         <input
           id={id}
-          className="peer f-md b-std order-3 col-start-1 row-2 my-1 w-full [appearance:textfield] py-0 pr-0 pl-9 leading-7.5 transition-colors [-moz-appearance:textfield] focus:ring-1 focus:ring-cyan-700 focus:outline-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="peer f-md b-std col-start-1 row-2 my-1 w-full [appearance:textfield] bg-neutral-300 py-0 pr-0 pl-9 leading-7.5 transition-colors [-moz-appearance:textfield] focus:ring-1 focus:ring-cyan-700 focus:outline-0 dark:bg-neutral-700 dark:text-neutral-200 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           type={type}
           value={value}
           min={type === "number" ? ageMin : undefined}
@@ -35,12 +35,12 @@ export default function Filter({ id, type, label, help, value, onChange }) {
         <label
           id={`${id}-label`}
           htmlFor={id}
-          className="order 1 row-1 transition-colors peer-focus:text-cyan-700"
+          className="row-1 transition-colors peer-focus:text-cyan-700"
         >
           {label}
         </label>
         <BsSearch
-          className="f-md order-2 col-start-1 row-2 ml-3 transition-colors peer-focus:text-cyan-700"
+          className="f-md col-start-1 row-2 ml-3 transition-colors peer-focus:text-cyan-700"
           aria-hidden="true"
         />
         {type === "number" && (
@@ -53,7 +53,7 @@ export default function Filter({ id, type, label, help, value, onChange }) {
         )}
         <span
           id={`${id}-help`}
-          className="order-5 row-3 text-sm transition-colors peer-focus:text-cyan-700"
+          className="row-3 text-sm transition-colors peer-focus:text-cyan-700"
         >
           {help}
         </span>

@@ -1,16 +1,16 @@
 // Media Query for each breakpoint
 export const queries = {
   "4xs": "not (min-width: 256px)",
-  "3xs": "(min-width: 256px)",
-  "2xs": "(min-width: 384px)",
-  xs: "(min-width: 512px)",
-  sm: "(min-width: 640px)",
-  md: "(min-width: 768px)",
-  xm: "(min-width: 896px)",
-  lg: "(min-width: 1024px)",
-  xl: "(min-width: 1280px)",
-  "2xl": "(min-width: 1536px)",
-  "3xl": "(min-width: 2048px)",
+  "3xs": "(min-width: 256px) and (max-width: 384px)",
+  "2xs": "(min-width: 384px) and (max-width: 512px)",
+  xs: "(min-width: 512px) and (max-width: 640px)",
+  sm: "(min-width: 640px) and (max-width: 768px)",
+  md: "(min-width: 768px) and (max-width: 896px)",
+  xm: "(min-width: 896px) and (max-width: 1024px)",
+  lg: "(min-width: 1024px) and (max-width: 1280px)",
+  xl: "(min-width: 1280px) and (max-width: 1536px)",
+  "2xl": "(min-width: 1536px) and (max-width: 2048px)",
+  "3xl": "(min-width: 2048px) and (max-width: 2560px)",
   "4xl": "(min-width: 2560px)",
 };
 
