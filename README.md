@@ -28,7 +28,7 @@ This project demonstrates advanced styling techniques beyond Tailwind CSS with:
 
 ## Live demo:
 
-The project is available at https://large-grid-vite-react.vercel.app/.
+The project is available at https://large-grid-react.vercel.app/.
 
 ## Installation
 
