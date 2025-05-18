@@ -14,7 +14,7 @@ export default function Grid({ cells }) {
     >
       {cells.map(({ index, name, age, color, lower }) => (
         <Cell
-          key={index}
+          key={`${index}-${name}`}
           name={name}
           age={age}
           backgroundColor={color}
