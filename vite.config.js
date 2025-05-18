@@ -7,6 +7,8 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig({
   plugins: [react(), tailwindcss(), visualizer({ open: true })],
   build: {
+    chunkSizeWarningLimit: 2000,
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: (id) => {
