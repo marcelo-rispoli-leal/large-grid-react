@@ -6,6 +6,11 @@ import { visualizer } from "rollup-plugin-visualizer";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), visualizer({ open: true })],
+  server: {
+    warmup: {
+      clientFiles: ["./src/index.jsx"],
+    },
+  },
   build: {
     chunkSizeWarningLimit: 2000,
     sourcemap: false,
