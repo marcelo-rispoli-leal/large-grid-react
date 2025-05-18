@@ -7,19 +7,10 @@ import Grid from "../components/Grid";
 import useGridFilters from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
-import { BsArrowDownCircle } from "react-icons/bs";
 
 export default function App() {
-  const {
-    nameFilter,
-    ageFilter,
-    filteredUsers,
-    handleFilterChange,
-    loadMoreUsers,
-    isLoading,
-    progress,
-    hasMoreUsers,
-  } = useGridFilters();
+  const { nameFilter, ageFilter, filteredUsers, handleFilterChange } =
+    useGridFilters();
 
   // Retrieve number of columns and lines
   const columns = useGridColumns();
@@ -54,36 +45,6 @@ export default function App() {
           <Summary count={filteredUsers.length} lines={lines} />
         </div>
         {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
-
-        {/* Indicador de progresso e botão para carregar mais */}
-        {filteredUsers.length > 0 && (
-          <div className="mt-4 flex flex-col items-center">
-            {/* Barra de progresso */}
-            <div className="mb-2 h-2.5 w-full max-w-md rounded-full bg-neutral-300 dark:bg-neutral-700">
-              <div
-                className="h-2.5 rounded-full bg-cyan-700 transition-all duration-500"
-                style={{ width: `${progress}%` }}
-                role="progressbar"
-                aria-valuenow={progress}
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
-            </div>
-
-            {/* Botão para carregar mais usuários */}
-            {hasMoreUsers && (
-              <button
-                onClick={loadMoreUsers}
-                disabled={isLoading}
-                className="mt-2 flex items-center gap-2 rounded-md bg-cyan-700 px-4 py-2 text-white transition-colors hover:bg-cyan-800 disabled:cursor-not-allowed disabled:opacity-50"
-                aria-busy={isLoading}
-              >
-                <BsArrowDownCircle />
-                {isLoading ? "Carregando..." : "Carregar mais usuários"}
-              </button>
-            )}
-          </div>
-        )}
       </div>
       <Analytics />
       <SpeedInsights />

@@ -11,20 +11,19 @@ export default function useGridFilters() {
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [currentBatch, setCurrentBatch] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
 
-  // Obter limites das variáveis de ambiente
+  // Get limits from environment variables
   const USERS_LIMIT = Number(import.meta.env.VITE_USERS_LIMIT) || 10000;
   const USERS_BATCH = Number(import.meta.env.VITE_USERS_BATCH) || 1000;
   const TOTAL_BATCHES = Math.ceil(USERS_LIMIT / USERS_BATCH);
 
-  // Função para aplicar filtros à lista de usuários
+  // Function to apply filters to the user list
   const applyFilters = useCallback(
     (users) => {
       const filterName = nameFilter.toLowerCase();
       const filterAge = ageFilter;
 
-      // Retorna todos os usuários quando filtros não aplicados
+      // Returns all users when filters are not applied
       if (
         filterAge === DEFAULT_AGE_FILTER &&
         filterName === DEFAULT_NAME_FILTER
@@ -32,7 +31,7 @@ export default function useGridFilters() {
         return setFilteredUsers(users);
       }
 
-      // Caso contrário, retorna usuários filtrados
+      // Otherwise, return filtered users
       const filtered = users.filter(
         ({ lower, age }) =>
           lower.includes(filterName) &&
@@ -43,39 +42,35 @@ export default function useGridFilters() {
     [nameFilter, ageFilter],
   );
 
-  // Carregar usuários em lotes
+  // Upload users in batches
   useEffect(() => {
     const loadBatch = () => {
-      // Verifica se já atingimos o limite de usuários
+      // Check user limit has been reached
       if (allUsers.length >= USERS_LIMIT) {
         return;
       }
 
-      setIsLoading(true);
-
-      // Calcula quantos usuários ainda podem ser carregados
+      // Calculates how many users can still be loaded
       const remainingCapacity = USERS_LIMIT - allUsers.length;
       const batchSize = Math.min(USERS_BATCH, remainingCapacity);
 
-      // Se não há mais capacidade, não carrega mais usuários
+      // If there is no more capacity, it cannot carry more users
       if (batchSize <= 0) {
-        setIsLoading(false);
         return;
       }
 
-      // Gerar um novo lote de usuários com tamanho ajustado se necessário
+      // Generate a new batch of users with adjusted size if necessary
       const newUsers = Users(batchSize, (currentBatch - 1) * USERS_BATCH);
 
       setAllUsers((prevUsers) => {
         const updatedUsers = [...prevUsers, ...newUsers];
 
-        // Aplicar filtros aos usuários atualizados
+        // Apply filters to updated users
         applyFilters(updatedUsers);
-
         return updatedUsers;
       });
 
-      setIsLoading(false);
+      return;
     };
 
     if (currentBatch <= TOTAL_BATCHES && allUsers.length < USERS_LIMIT) {
@@ -90,31 +85,30 @@ export default function useGridFilters() {
     allUsers.length,
   ]);
 
-  // Manipulador de mudança de filtro
-  const handleFilterChange = useCallback(
-    (newValue, inputType) => {
-      // Define filtro de nome
-      if (inputType !== "number") {
-        setNameFilter(newValue);
-      } else {
-        // Define filtro de idade
-        setAgeFilter(+newValue);
-      }
+  // Filter change handler
+  const handleFilterChange = useCallback((newValue, inputType) => {
+    // Define filtro de nome
+    if (inputType !== "number") {
+      setNameFilter(newValue);
+    } else {
+      // Define filtro de idade
+      setAgeFilter(+newValue);
+    }
+  }, []);
 
-      // Aplica os filtros atualizados
-      setTimeout(() => applyFilters(allUsers), 0);
-    },
-    [allUsers, applyFilters],
-  );
+  // Effect to apply filters when filters or users change
+  useEffect(() => {
+    applyFilters(allUsers);
+  }, [nameFilter, ageFilter, allUsers, applyFilters]);
 
-  // Carregar mais usuários
-  const loadMoreUsers = useCallback(() => {
-    // Verifica se o próximo lote ultrapassaria o limite de usuários
-    // ou se já atingimos o último lote planejado
+  // Load more users
+  useCallback(() => {
+    // Checks if the next batch would exceed the user limit
+    // or if the last batch has been reached
     if (currentBatch < TOTAL_BATCHES && allUsers.length < USERS_LIMIT) {
-      // Verifica se este é o último lote necessário
+      // Check if this is the last batch needed
       if ((currentBatch + 1) * USERS_BATCH > USERS_LIMIT) {
-        // Calcula quantos usuários ainda faltam para atingir o limite exato
+        // Calculates how many users are left to reach the exact limit
         const remainingUsers = USERS_LIMIT - allUsers.length;
         if (remainingUsers <= 0) {
           return; // Já atingimos o limite, não carrega mais
@@ -132,9 +126,5 @@ export default function useGridFilters() {
     setNameFilter,
     setAgeFilter,
     setFilteredUsers,
-    loadMoreUsers,
-    isLoading,
-    progress: Math.min(100, (currentBatch / TOTAL_BATCHES) * 100),
-    hasMoreUsers: currentBatch < TOTAL_BATCHES && allUsers.length < USERS_LIMIT,
   };
 }
