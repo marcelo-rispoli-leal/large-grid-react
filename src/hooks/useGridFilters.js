@@ -175,7 +175,8 @@ export default function useGridFilters() {
   // Effect to apply filters when filters or users change
   useEffect(() => {
     applyFilters(allUsers);
-    console.log("Applying filters. allUsers.length:", allUsers.length);
+    DEV_MODE &&
+      console.log("Applying filters. allUsers.length:", allUsers.length);
   }, [nameFilter, ageFilter, allUsers, applyFilters]);
 
   return {
