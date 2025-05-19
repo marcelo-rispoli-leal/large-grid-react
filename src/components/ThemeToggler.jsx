@@ -1,3 +1,4 @@
+// Exports the Theme Toggler to import in the NavBar
 import { BsSun, BsMoon } from "react-icons/bs";
 import { useTheme } from "../hooks/useTheme";
 

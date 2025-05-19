@@ -1,3 +1,4 @@
+// Exports the Theme Provider to import in the page index
 import { useState, useEffect } from "react";
 import { ThemeContext } from "../hooks/useTheme.js";
 

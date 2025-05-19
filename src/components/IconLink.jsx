@@ -1,3 +1,4 @@
+// Exports each Icon Link to import in the NavBar
 export default function IconLink({ icon, link }) {
   return (
     <a

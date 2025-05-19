@@ -1,6 +1,7 @@
+// Exports the Spin Buttons to import in the Age Filter
 import { BsFillCaretUpFill, BsFillCaretDownFill } from "react-icons/bs";
 
-export default function Stepper({ value, onChange, min, max }) {
+export default function SpinButtons({ value, onChange, min, max }) {
   const handleIncrement = () => {
     const newValue = value + 1;
     if (newValue <= max) {

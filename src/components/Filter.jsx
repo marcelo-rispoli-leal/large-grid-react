@@ -1,5 +1,6 @@
+// Exports each Filter to import in the App
 import { BsSearch } from "react-icons/bs";
-import Stepper from "./Stepper";
+import SpinButtons from "./SpinButtons";
 
 const limit = ~~Number(import.meta.env.VITE_AGE_LIMIT);
 const ageMin = -1;
@@ -44,7 +45,7 @@ export default function Filter({ id, type, label, help, value, onChange }) {
           aria-hidden="true"
         />
         {type === "number" && (
-          <Stepper
+          <SpinButtons
             value={value}
             onChange={onChange}
             min={ageMin}

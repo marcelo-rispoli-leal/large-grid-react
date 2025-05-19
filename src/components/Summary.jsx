@@ -1,3 +1,4 @@
+// Exports the Summary to import in the App
 import { DEV_MODE } from "../hooks/useGridFilters";
 
 export default function Summary({ count, lines }) {

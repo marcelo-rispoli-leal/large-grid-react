@@ -1,3 +1,4 @@
+// Exports the Grid to import in the App
 import { useGridMaxHeight } from "../hooks/useGridMaxHeight";
 import Cell from "./Cell";
 

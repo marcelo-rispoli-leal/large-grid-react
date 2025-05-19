@@ -1,3 +1,4 @@
+// Export the NavBar to import in the App
 import { BsEnvelope, BsGithub, BsLinkedin } from "react-icons/bs";
 import IconLink from "./IconLink";
 import ThemeToggler from "./ThemeToggler";

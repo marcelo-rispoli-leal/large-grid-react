@@ -1,3 +1,4 @@
+// Exports each Cell to import in the Grid
 export default function Cell({ index, name, age, backgroundColor, lower }) {
   return (
     <div
