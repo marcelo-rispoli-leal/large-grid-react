@@ -1,25 +1,143 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import Users from "../helpers/Users";
 
 // Named constants
 export const DEFAULT_AGE_FILTER = -1;
 export const DEFAULT_NAME_FILTER = "";
+export const DEV_MODE = import.meta.env.DEV;
 
 export default function useGridFilters() {
   const [nameFilter, setNameFilter] = useState(DEFAULT_NAME_FILTER);
   const [ageFilter, setAgeFilter] = useState(DEFAULT_AGE_FILTER);
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [currentBatch, setCurrentBatch] = useState(1);
+
+  // Ref para rastrear o allUsers.length para o qual um carregamento já foi iniciado
+  const initiatedLoadForLengthRef = useRef(-1);
 
   // Get limits from environment variables
   const USERS_LIMIT = Number(import.meta.env.VITE_USERS_LIMIT) || 10000;
   const USERS_BATCH = Number(import.meta.env.VITE_USERS_BATCH) || 1000;
-  const TOTAL_BATCHES = Math.ceil(USERS_LIMIT / USERS_BATCH);
+
+  useEffect(
+    () => {
+      if (allUsers.length >= USERS_LIMIT) {
+        initiatedLoadForLengthRef.current = -1;
+        return;
+      }
+      // Se o useEffect for executado novamente para o mesmo allUsers.length
+      // (o que acontece no Strict Mode) antes que o estado allUsers.length seja atualizado,
+      // e já marcamos que um carregamento foi iniciado para este length,
+      // então pulamos esta execução para evitar duplicar o lote.
+      if (allUsers.length === initiatedLoadForLengthRef.current) {
+        DEV_MODE &&
+          console.log(
+            "useEffect re-run for same allUsers.length (Strict Mode behavior). Skipping duplicate batch load for length:",
+            allUsers.length,
+          );
+        return;
+      }
+
+      const remainingCapacity = USERS_LIMIT - allUsers.length;
+      const batchSize = Math.min(USERS_BATCH, remainingCapacity);
+
+      if (batchSize <= 0) {
+        // Se não há mais capacidade, resetamos a ref para permitir futuros carregamentos
+        // se USERS_LIMIT mudar, por exemplo.
+        initiatedLoadForLengthRef.current = -1;
+        return;
+      }
+
+      DEV_MODE &&
+        console.log(
+          "Loading users. allUsers.length:",
+          allUsers.length,
+          "USERS_LIMIT:",
+          USERS_LIMIT,
+          "batchSize:",
+          batchSize,
+        );
+      // Gera um novo lote de usuários. O startIndex é o comprimento atual de allUsers.
+      const newUsers = Users(batchSize, allUsers.length);
+
+      // Antes de enfileirar a atualização do estado, marcamos que um carregamento
+      // para o allUsers.length atual foi iniciado.
+      initiatedLoadForLengthRef.current = allUsers.length;
+
+      setAllUsers((prevUsers) => {
+        DEV_MODE &&
+          console.log(
+            "Updating allUsers. Prev length:",
+            prevUsers.length,
+            "New users count:",
+            newUsers.length,
+          );
+        return [...prevUsers, ...newUsers];
+      });
+    },
+    // Só carrega se ainda não atingimos o limite de usuários
+    /* if (allUsers.length < USERS_LIMIT) {
+      // Se o useEffect for executado novamente para o mesmo allUsers.length
+      // (o que acontece no Strict Mode) antes que o estado allUsers.length seja atualizado,
+      // e já marcamos que um carregamento foi iniciado para este length,
+      // então pulamos esta execução para evitar duplicar o lote.
+      if (allUsers.length === initiatedLoadForLengthRef.current) {
+        console.log(
+          "useEffect re-run for same allUsers.length (Strict Mode behavior). Skipping duplicate batch load for length:",
+          allUsers.length,
+        );
+        return;
+      }
+
+      const remainingCapacity = USERS_LIMIT - allUsers.length;
+      const batchSize = Math.min(USERS_BATCH, remainingCapacity);
+
+      if (batchSize <= 0) {
+        // Se não há mais capacidade, resetamos a ref para permitir futuros carregamentos
+        // se USERS_LIMIT mudar, por exemplo.
+        initiatedLoadForLengthRef.current = -1;
+        return;
+      }
+
+      console.log(
+        "Loading users. allUsers.length:",
+        allUsers.length,
+        "USERS_LIMIT:",
+        USERS_LIMIT,
+        "batchSize:",
+        batchSize,
+      );
+      // Gera um novo lote de usuários. O startIndex é o comprimento atual de allUsers.
+      const newUsers = Users(batchSize, allUsers.length);
+
+      // Antes de enfileirar a atualização do estado, marcamos que um carregamento
+      // para o allUsers.length atual foi iniciado.
+      initiatedLoadForLengthRef.current = allUsers.length;
+
+      setAllUsers((prevUsers) => {
+        console.log(
+          "Updating allUsers. Prev length:",
+          prevUsers.length,
+          "New users count:",
+          newUsers.length,
+        );
+        return [...prevUsers, ...newUsers];
+      });
+    } else {
+      // Limite de usuários atingido ou excedido. Resetamos a ref.
+      initiatedLoadForLengthRef.current = -1;
+    } */
+    [allUsers.length, USERS_LIMIT, USERS_BATCH],
+  );
 
   // Function to apply filters to the user list
   const applyFilters = useCallback(
-    (users) => {
+    (usersToFilter) => {
+      DEV_MODE &&
+        console.log(
+          "applyFilters called with usersToFilter length:",
+          usersToFilter.length,
+        );
       const filterName = nameFilter.toLowerCase();
       const filterAge = ageFilter;
 
@@ -28,62 +146,20 @@ export default function useGridFilters() {
         filterAge === DEFAULT_AGE_FILTER &&
         filterName === DEFAULT_NAME_FILTER
       ) {
-        return setFilteredUsers(users);
+        setFilteredUsers(usersToFilter);
+        return;
       }
 
       // Otherwise, return filtered users
-      const filtered = users.filter(
+      const filtered = usersToFilter.filter(
         ({ lower, age }) =>
           lower.includes(filterName) &&
           (filterAge === DEFAULT_AGE_FILTER || age === filterAge),
       );
-      return setFilteredUsers(filtered);
+      setFilteredUsers(filtered);
     },
     [nameFilter, ageFilter],
   );
-
-  // Upload users in batches
-  useEffect(() => {
-    const loadBatch = () => {
-      // Check user limit has been reached
-      if (allUsers.length >= USERS_LIMIT) {
-        return;
-      }
-
-      // Calculates how many users can still be loaded
-      const remainingCapacity = USERS_LIMIT - allUsers.length;
-      const batchSize = Math.min(USERS_BATCH, remainingCapacity);
-
-      // If there is no more capacity, it cannot carry more users
-      if (batchSize <= 0) {
-        return;
-      }
-
-      // Generate a new batch of users with adjusted size if necessary
-      const newUsers = Users(batchSize, (currentBatch - 1) * USERS_BATCH);
-
-      setAllUsers((prevUsers) => {
-        const updatedUsers = [...prevUsers, ...newUsers];
-
-        // Apply filters to updated users
-        applyFilters(updatedUsers);
-        return updatedUsers;
-      });
-
-      return;
-    };
-
-    if (currentBatch <= TOTAL_BATCHES && allUsers.length < USERS_LIMIT) {
-      loadBatch();
-    }
-  }, [
-    currentBatch,
-    applyFilters,
-    USERS_BATCH,
-    TOTAL_BATCHES,
-    USERS_LIMIT,
-    allUsers.length,
-  ]);
 
   // Filter change handler
   const handleFilterChange = useCallback((newValue, inputType) => {
@@ -99,32 +175,13 @@ export default function useGridFilters() {
   // Effect to apply filters when filters or users change
   useEffect(() => {
     applyFilters(allUsers);
+    console.log("Applying filters. allUsers.length:", allUsers.length);
   }, [nameFilter, ageFilter, allUsers, applyFilters]);
-
-  // Load more users
-  useCallback(() => {
-    // Checks if the next batch would exceed the user limit
-    // or if the last batch has been reached
-    if (currentBatch < TOTAL_BATCHES && allUsers.length < USERS_LIMIT) {
-      // Check if this is the last batch needed
-      if ((currentBatch + 1) * USERS_BATCH > USERS_LIMIT) {
-        // Calculates how many users are left to reach the exact limit
-        const remainingUsers = USERS_LIMIT - allUsers.length;
-        if (remainingUsers <= 0) {
-          return; // Já atingimos o limite, não carrega mais
-        }
-      }
-      setCurrentBatch((prev) => prev + 1);
-    }
-  }, [currentBatch, TOTAL_BATCHES, allUsers.length, USERS_BATCH, USERS_LIMIT]);
 
   return {
     nameFilter,
     ageFilter,
     filteredUsers,
     handleFilterChange,
-    setNameFilter,
-    setAgeFilter,
-    setFilteredUsers,
   };
 }

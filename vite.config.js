@@ -4,24 +4,30 @@ import tailwindcss from "@tailwindcss/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss(), visualizer({ open: true })],
-  server: {
-    warmup: {
-      clientFiles: ["./src/index.jsx"],
+export default defineConfig(() => {
+  return {
+    plugins: [react(), tailwindcss(), visualizer({ open: true })],
+    define: {
+      //eslint-disable-next-line no-undef
+      "import.meta.env.VITE_VERCEL": JSON.stringify(process.env.VERCEL === "1"),
     },
-  },
-  build: {
-    chunkSizeWarningLimit: 2000,
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          if (id.includes("@faker-js/faker")) {
-            return "faker";
-          }
+    server: {
+      warmup: {
+        clientFiles: ["./src/index.jsx"],
+      },
+    },
+    build: {
+      chunkSizeWarningLimit: 2000,
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (id.includes("@faker-js/faker")) {
+              return "faker";
+            }
+          },
         },
       },
     },
-  },
+  };
 });

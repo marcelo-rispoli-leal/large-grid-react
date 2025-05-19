@@ -1,4 +1,8 @@
+import { DEV_MODE } from "../hooks/useGridFilters";
+
 export default function Summary({ count, lines }) {
+  DEV_MODE && console.log(`Summary props: count=${count} lines=${lines}`);
+
   return (
     <div
       className="b-std bg-cyan-700 p-3"

@@ -8,6 +8,8 @@ import useGridFilters from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
 
+const vercel = import.meta.env.VITE_VERCEL;
+
 export default function App() {
   const { nameFilter, ageFilter, filteredUsers, handleFilterChange } =
     useGridFilters();
@@ -46,8 +48,8 @@ export default function App() {
         </div>
         {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
       </div>
-      <Analytics />
-      <SpeedInsights />
+      {vercel && <Analytics />}
+      {vercel && <SpeedInsights />}
     </div>
   );
 }
