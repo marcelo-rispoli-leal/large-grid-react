@@ -75,6 +75,21 @@ export default function useGridFilters() {
         );
       return [...prevUsers, ...newUsers];
     });
+
+    // Cleanup function for the user loading effect
+    return () => {
+      // NOTE: loadStartedForLengthRef.current is intentionally NOT reset here.
+      // This ref's purpose is to prevent duplicate batch loads if the effect
+      // re-runs for the same allUsers.length (e.g., due to Strict Mode)
+      // before the state update from the first run has completed.
+      // Resetting it here would negate that protection and could lead to
+      // duplicate data generation.
+      // The ref will naturally reset if the component unmounts and remounts.
+      DEV_MODE &&
+        console.log(
+          "Cleanup: User loading effect (allUsers.length changed or unmount). loadStartedForLengthRef is not reset by this cleanup.",
+        );
+    };
   }, [allUsers.length]);
 
   // Function to apply filters to the user list
@@ -118,10 +133,22 @@ export default function useGridFilters() {
 
   // Effect to apply filters when filters or users change
   useEffect(() => {
-    applyFilters(allUsers);
-    // Dev log for the current state of the filter effect
-    DEV_MODE &&
-      console.log("Applying filters. allUsers.length:", allUsers.length);
+    let isMounted = true; // Flag to track mounted state
+
+    if (isMounted) {
+      applyFilters(allUsers);
+      // Dev log for the current state of the filter effect
+      DEV_MODE &&
+        console.log("Applying filters. allUsers.length:", allUsers.length);
+    }
+    // Cleanup function for the filter applying effect
+    return () => {
+      isMounted = false; // Set flag to false when component unmounts or dependencies change
+      DEV_MODE &&
+        console.log(
+          "Cleanup: Filter applying effect (dependencies changed or unmount).",
+        );
+    };
   }, [nameFilter, ageFilter, allUsers, applyFilters]);
 
   return {
