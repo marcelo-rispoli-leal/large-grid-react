@@ -3,10 +3,10 @@ import Users from "../scripts/Users";
 
 // Named constants from environment variables
 const { DEV, VITE_USERS_BATCH, VITE_USERS_LIMIT } = import.meta.env;
-const USERS_LIMIT = ~~Number(VITE_USERS_LIMIT) || 10000;
+export const DEV_MODE = DEV;
+export const USERS_LIMIT = ~~Number(VITE_USERS_LIMIT) || 10000;
 const BATCH_SIZE = ~~Number(VITE_USERS_BATCH) > 0 && ~~Number(VITE_USERS_BATCH);
 const USERS_BATCH = Math.min(BATCH_SIZE || USERS_LIMIT, USERS_LIMIT);
-export const DEV_MODE = DEV;
 // Default named constants
 export const DEFAULT_AGE_FILTER = -1;
 export const DEFAULT_NAME_FILTER = "";
@@ -127,6 +127,7 @@ export default function useGridFilters() {
   return {
     nameFilter,
     ageFilter,
+    allUsers,
     filteredUsers,
     handleFilterChange,
   };

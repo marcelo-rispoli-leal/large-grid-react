@@ -1,18 +1,18 @@
-// Exports the App to import in the index.js
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "./NavBar";
 import Filter from "./Filter";
 import Summary from "./Summary";
+import ProgressBar from "./ProgressBar";
 import Grid from "./Grid";
-import useGridFilters from "../hooks/useGridFilters";
+import useGridFilters, { USERS_LIMIT } from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
 
 const vercel = import.meta.env.VITE_VERCEL;
 
 export default function App() {
-  const { nameFilter, ageFilter, filteredUsers, handleFilterChange } =
+  const { nameFilter, ageFilter, allUsers, filteredUsers, handleFilterChange } =
     useGridFilters();
 
   // Retrieve number of columns and lines
@@ -25,7 +25,7 @@ export default function App() {
         <NavBar />
         <h1 className="mt-6 text-5xl font-bold">{document.title}</h1>
         <div
-          className="b-std my-9 grid w-full gap-3 bg-neutral-300 p-3 transition-colors md:grid-cols-3 md:grid-rows-1 dark:bg-neutral-700"
+          className="b-std mt-9 grid w-full gap-3 bg-neutral-300 p-3 transition-colors md:grid-cols-3 md:grid-rows-1 dark:bg-neutral-700"
           role="region"
           aria-label="Filters and Summary"
         >
@@ -46,6 +46,9 @@ export default function App() {
             onChange={handleFilterChange}
           />
           <Summary count={filteredUsers.length} lines={lines} />
+        </div>
+        <div className="h-9 py-2">
+          <ProgressBar current={allUsers.length} max={USERS_LIMIT} />
         </div>
         {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
       </div>
