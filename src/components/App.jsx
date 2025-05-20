@@ -1,3 +1,4 @@
+// Exports the App to import in the index.js
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "./NavBar";

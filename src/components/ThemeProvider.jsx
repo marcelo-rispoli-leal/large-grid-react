@@ -1,3 +1,4 @@
+// Exports the Theme Provider to import in the index.js
 import { ThemeContext } from "../hooks/useThemeContext.js";
 import { useThemeProvider } from "../hooks/useThemeProvider.js";
 
