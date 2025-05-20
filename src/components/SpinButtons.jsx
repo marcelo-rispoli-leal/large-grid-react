@@ -1,7 +1,13 @@
 // Exports the Spin Buttons to import in the Age Filter
+import Colors from "../helpers/Colors";
+import { DEFAULT_AGE_FILTER } from "../hooks/useGridFilters";
 import { BsFillCaretUpFill, BsFillCaretDownFill } from "react-icons/bs";
 
 export default function SpinButtons({ value, onChange, min, max }) {
+  const { ageMax } = Colors();
+  const checkMinValue = value === DEFAULT_AGE_FILTER;
+  const checkMaxValue = value === ageMax;
+
   const handleIncrement = () => {
     const newValue = value + 1;
     if (newValue <= max) {
@@ -17,10 +23,12 @@ export default function SpinButtons({ value, onChange, min, max }) {
   };
 
   return (
-    <div className="order-4 col-start-1 row-2 mr-2 grid h-7.5 w-4 grid-cols-1 grid-rows-2 items-center gap-0.5 justify-self-end bg-transparent p-0.5">
+    <div className="col-start-1 row-2 mr-9 grid h-7.5 w-4 grid-cols-1 grid-rows-2 items-center justify-self-end bg-transparent p-0.5">
       <button
-        className="cursor-pointer border-none bg-transparent p-0 transition-colors hover:bg-cyan-700"
+        className="transition-colors enabled:cursor-pointer enabled:hover:bg-cyan-700 disabled:text-neutral-600 dark:disabled:text-neutral-400"
         role="spinbutton"
+        disabled={checkMaxValue}
+        aria-disabled={checkMaxValue}
         aria-label="Increment"
         onClick={handleIncrement}
       >
@@ -28,7 +36,10 @@ export default function SpinButtons({ value, onChange, min, max }) {
       </button>
 
       <button
-        className="cursor-pointer border-none bg-transparent p-0 transition-colors hover:bg-cyan-700"
+        className="transition-colors enabled:cursor-pointer enabled:hover:bg-cyan-700 disabled:text-neutral-600 dark:disabled:text-neutral-400"
+        role="spinbutton"
+        disabled={checkMinValue}
+        aria-disabled={checkMinValue}
         aria-label="Decrement"
         onClick={handleDecrement}
       >

@@ -1,7 +1,7 @@
 import Colors from "./Colors";
 import { faker } from "@faker-js/faker/locale/pt_BR";
 
-const colors = Colors();
+const { colors } = Colors();
 
 export default function Users(batchSize = 0, startIndex = 0) {
   const users = [];
@@ -14,7 +14,6 @@ export default function Users(batchSize = 0, startIndex = 0) {
 
   for (let i = 0; i < names.length; i++) {
     const age = ~~(Math.random() * colors.length);
-
     users.push({
       index: startIndex + i, // Use the given starting index + position in batch
       name: names[i],

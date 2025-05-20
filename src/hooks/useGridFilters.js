@@ -1,10 +1,16 @@
-import { useCallback, useState, useEffect, useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Users from "../helpers/Users";
 
-// Named constants
+// Named constants from environment variables
+const { DEV, VITE_USERS_BATCH, VITE_USERS_LIMIT } = import.meta.env;
+const USERS_LIMIT = ~~Number(VITE_USERS_LIMIT) || 10000;
+const BATCH_SIZE = ~~Number(VITE_USERS_BATCH) > 0 && ~~Number(VITE_USERS_BATCH);
+const USERS_BATCH = Math.min(BATCH_SIZE || USERS_LIMIT, USERS_LIMIT);
+export const DEV_MODE = DEV;
+// Default named constants
 export const DEFAULT_AGE_FILTER = -1;
 export const DEFAULT_NAME_FILTER = "";
-export const DEV_MODE = import.meta.env.DEV;
+const DEFAULT_LENGTH_REF = -1;
 
 export default function useGridFilters() {
   const [nameFilter, setNameFilter] = useState(DEFAULT_NAME_FILTER);
@@ -13,22 +19,18 @@ export default function useGridFilters() {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   // Ref to track allUsers.length for which a load has already started
-  const initiatedLoadForLengthRef = useRef(-1);
-
-  // Get limits from environment variables
-  const USERS_LIMIT = Number(import.meta.env.VITE_USERS_LIMIT) || 10000;
-  const USERS_BATCH = Number(import.meta.env.VITE_USERS_BATCH) || 1000;
+  const loadStartedForLengthRef = useRef(DEFAULT_LENGTH_REF);
 
   useEffect(() => {
+    // Checks if useEffect already reached the limit
     if (allUsers.length >= USERS_LIMIT) {
-      initiatedLoadForLengthRef.current = -1;
+      loadStartedForLengthRef.current = DEFAULT_LENGTH_REF;
       return;
     }
-    // If useEffect is executed again for the same allUsers.length
-    // (which happens in Strict Mode) before the allUsers.length state is updated
-    // it is marked that loading has started for this length
-    // and then the new execution is skipped to avoid duplicating the batch.
-    if (allUsers.length === initiatedLoadForLengthRef.current) {
+    // Checks if useEffect is triggered for the same allUsers.length
+    // (Strict Mode behavior) to skip execution and avoid batch duplication
+    if (allUsers.length === loadStartedForLengthRef.current) {
+      // Dev log for the skipped re-run
       DEV_MODE &&
         console.log(
           "useEffect re-run for same allUsers.length (Strict Mode behavior). Skipping duplicate batch load for length:",
@@ -36,16 +38,16 @@ export default function useGridFilters() {
         );
       return;
     }
-
+    // Calculates the remaining capacity and current the batch size
     const remainingCapacity = USERS_LIMIT - allUsers.length;
     const batchSize = Math.min(USERS_BATCH, remainingCapacity);
 
     if (batchSize <= 0) {
       // If there is no more capacity, the ref is reset to allow future loads.
-      initiatedLoadForLengthRef.current = -1;
+      loadStartedForLengthRef.current = DEFAULT_LENGTH_REF;
       return;
     }
-
+    // Dev log for the current state of the load process
     DEV_MODE &&
       console.log(
         "Loading users. allUsers.length:",
@@ -60,9 +62,10 @@ export default function useGridFilters() {
 
     // Before queuing the state update, it is marked that a load for the
     // current allUsers.length has started.
-    initiatedLoadForLengthRef.current = allUsers.length;
+    loadStartedForLengthRef.current = allUsers.length;
 
     setAllUsers((prevUsers) => {
+      // Dev log for the state update
       DEV_MODE &&
         console.log(
           "Updating allUsers. Prev length:",
@@ -72,16 +75,18 @@ export default function useGridFilters() {
         );
       return [...prevUsers, ...newUsers];
     });
-  }, [allUsers.length, USERS_LIMIT, USERS_BATCH]);
+  }, [allUsers.length]);
 
   // Function to apply filters to the user list
   const applyFilters = useCallback(
     (usersToFilter) => {
+      // Dev log for the current state of the filter process
       DEV_MODE &&
         console.log(
           "applyFilters called with usersToFilter length:",
           usersToFilter.length,
         );
+      // Filters constants
       const filterName = nameFilter.toLowerCase();
       const filterAge = ageFilter;
 
@@ -94,7 +99,7 @@ export default function useGridFilters() {
         return;
       }
 
-      // Otherwise, return filtered users
+      // Otherwise, returns filtered users
       const filtered = usersToFilter.filter(
         ({ lower, age }) =>
           lower.includes(filterName) &&
@@ -107,18 +112,14 @@ export default function useGridFilters() {
 
   // Filter change handler
   const handleFilterChange = useCallback((newValue, inputType) => {
-    // Set name filter
-    if (inputType !== "number") {
-      setNameFilter(newValue);
-    } else {
-      // Set name filter
-      setAgeFilter(+newValue);
-    }
+    // Set filters
+    inputType !== "number" ? setNameFilter(newValue) : setAgeFilter(+newValue);
   }, []);
 
   // Effect to apply filters when filters or users change
   useEffect(() => {
     applyFilters(allUsers);
+    // Dev log for the current state of the filter effect
     DEV_MODE &&
       console.log("Applying filters. allUsers.length:", allUsers.length);
   }, [nameFilter, ageFilter, allUsers, applyFilters]);

@@ -1,6 +1,7 @@
 // Exports each Filter to import in the App
-import { BsSearch } from "react-icons/bs";
+import { BsFunnelFill } from "react-icons/bs";
 import SpinButtons from "./SpinButtons";
+import ResetButton from "./ResetButton";
 
 const limit = ~~Number(import.meta.env.VITE_AGE_LIMIT);
 const ageMin = -1;
@@ -40,8 +41,8 @@ export default function Filter({ id, type, label, help, value, onChange }) {
         >
           {label}
         </label>
-        <BsSearch
-          className="f-md col-start-1 row-2 ml-3 transition-colors peer-focus:text-cyan-700"
+        <BsFunnelFill
+          className="f-md col-start-1 row-2 ml-3 h-5 w-5 transition-colors peer-focus:text-cyan-700"
           aria-hidden="true"
         />
         {type === "number" && (
@@ -52,6 +53,7 @@ export default function Filter({ id, type, label, help, value, onChange }) {
             max={ageMax}
           />
         )}
+        <ResetButton value={value} type={type} onChange={onChange} />
         <span
           id={`${id}-help`}
           className="row-3 text-sm transition-colors peer-focus:text-cyan-700"

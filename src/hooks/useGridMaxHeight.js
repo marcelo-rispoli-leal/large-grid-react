@@ -11,9 +11,9 @@ export function useGridMaxHeight() {
 
     const updateMaxHeight = () => {
       const calcMaxHeight =
-        window.innerHeight - grid.offsetTop - 24 >= 192
+        window.innerHeight - grid.offsetTop - 24 >= 160
           ? window.innerHeight - grid.offsetTop - 24
-          : 192;
+          : 160;
       setMaxHeight(calcMaxHeight + "px");
     };
 

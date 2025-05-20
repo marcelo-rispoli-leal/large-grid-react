@@ -1,4 +1,4 @@
-//This function returns the random color for each age
+//Returns the random color for each age
 export default function Colors() {
   const colors = [];
   const limit = ~~Number(import.meta.env.VITE_AGE_LIMIT);
@@ -11,5 +11,5 @@ export default function Colors() {
     }
   } while (colors.length < ageMax + 1); // Added 1 to max age for zero age
 
-  return colors;
+  return { colors, ageMax };
 }
