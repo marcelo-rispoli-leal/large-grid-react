@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import Users from "../helpers/Users";
+import Users from "../scripts/Users";
 
 // Named constants from environment variables
 const { DEV, VITE_USERS_BATCH, VITE_USERS_LIMIT } = import.meta.env;

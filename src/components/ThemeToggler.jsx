@@ -1,9 +1,9 @@
 // Exports the Theme Toggler to import in the NavBar
 import { BsSun, BsMoon } from "react-icons/bs";
-import { useTheme } from "../hooks/useTheme";
+import { useThemeContext } from "../hooks/useThemeContext";
 
 export default function ThemeToggler() {
-  const { isDarkTheme, toggleTheme } = useTheme();
+  const { isDarkTheme, toggleTheme } = useThemeContext();
 
   return (
     <button

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { queries, columns } from "../helpers/Breakpoints";
+import { queries, columns } from "../scripts/Breakpoints";
 
 export default function useGridColumns() {
   const [breakpoint, setBreakpoint] = useState(null);

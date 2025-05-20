@@ -1,9 +1,9 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
-import NavBar from "../components/NavBar";
-import Filter from "../components/Filter";
-import Summary from "../components/Summary";
-import Grid from "../components/Grid";
+import NavBar from "./NavBar";
+import Filter from "./Filter";
+import Summary from "./Summary";
+import Grid from "./Grid";
 import useGridFilters from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";

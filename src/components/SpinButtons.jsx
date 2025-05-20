@@ -1,5 +1,5 @@
 // Exports the Spin Buttons to import in the Age Filter
-import Colors from "../helpers/Colors";
+import Colors from "../scripts/Colors";
 import { DEFAULT_AGE_FILTER } from "../hooks/useGridFilters";
 import { BsFillCaretUpFill, BsFillCaretDownFill } from "react-icons/bs";
 
