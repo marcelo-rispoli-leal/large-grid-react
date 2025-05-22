@@ -26,6 +26,6 @@ export const columns = {
   lg: 7,
   xl: 8,
   "2xl": 10,
-  "3xl": 15,
-  "4xl": 20,
+  "3xl": 10,
+  "4xl": 10,
 };

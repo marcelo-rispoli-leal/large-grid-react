@@ -14,18 +14,17 @@
 /* border standard */
 .b-std {
   border: 1px solid var(--color-neutral-500);
-  border-radius: 0.75rem;
 }
 
-/* font medium */
-.f-md {
-  font-size: medium;
-  font-weight: 500;
+.b-std:focus {
+  border: 1px solid var(--color-teal-700);
+  outline: 1px solid var(--color-teal-700);
+  box-shadow: none;
 }
 
 /* scrollbar styles */
 ::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 8px;
   background-color: var(--color-neutral-200);
 }
 
@@ -34,22 +33,22 @@
 }
 
 /* div scrollbar styles */
-div ::-webkit-scrollbar {
+#grid::-webkit-scrollbar {
   background-color: var(--color-neutral-300);
   outline: 1px solid var(--color-neutral-500);
-  border-top-right-radius: 0.75rem;
-  border-bottom-right-radius: 0.75rem;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
-.dark div ::-webkit-scrollbar {
+.dark #grid::-webkit-scrollbar {
   background-color: var(--color-neutral-700);
 }
 
 /* scrollbar thumb styles */
 ::-webkit-scrollbar-thumb {
   background-color: var(--color-neutral-500);
-  border-radius: 0.5rem;
-  height: 3rem;
+  border-radius: 8px;
+  height: 32px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -62,4 +61,32 @@ div ::-webkit-scrollbar {
 
 ::-webkit-scrollbar-button:single-button {
   background-size: 1px;
+}
+
+@media (min-width: var(--breakpoint-3xl)) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  #grid::-webkit-scrollbar {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  #grid::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    height: 40px;
+  }
+}
+
+@media (min-width: var(--breakpoint-4xl)) {
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  #grid::-webkit-scrollbar {
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+  }
+  #grid::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    height: 48px;
+  }
 }

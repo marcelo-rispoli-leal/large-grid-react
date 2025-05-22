@@ -1,31 +1,35 @@
+// App dependencies
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "./NavBar";
 import Filter from "./Filter";
 import Summary from "./Summary";
-import ProgressBar from "./ProgressBar";
 import Grid from "./Grid";
 import useGridFilters, { USERS_LIMIT } from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
-
+// Constant to identify the Vercel environment and enable its tools in the App
 const vercel = import.meta.env.VITE_VERCEL;
-
+// Exports the App for import into the page index component
 export default function App() {
-  const { nameFilter, ageFilter, allUsers, filteredUsers, handleFilterChange } =
+  // Retrieves users data and filters values and handlers
+  const { allUsers, filteredUsers, nameFilter, ageFilter, handleFilterChange } =
     useGridFilters();
-
-  // Retrieve number of columns and lines
+  // Calculates the progress of the data loading
+  const progress = Math.round((allUsers.length / USERS_LIMIT) * 100);
+  // Runs scripts to get the number of columns and rows in the Grid to show in the Summary
   const columns = useGridColumns();
   const { lines } = useGridLines(columns, filteredUsers.length);
-
+  // Returns the App component
   return (
-    <div className="max-h-full min-h-[100svh] w-full bg-neutral-200 py-6 font-sans text-neutral-900 transition-colors dark:bg-neutral-800 dark:text-neutral-200">
+    <div className="3xl:py-[30px] 4xl:py-[36px] max-h-full min-h-[100svh] w-full bg-neutral-200 py-[24px] font-sans text-neutral-900 transition-colors dark:bg-neutral-800 dark:text-neutral-100">
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
         <NavBar />
-        <h1 className="mt-6 text-5xl font-bold">{document.title}</h1>
+        <h1 className="3xl:mt-[30px] 3xl:text-[60px] 4xl:mt-[36px] 4xl:text-[72px] mt-[24px] text-[48px] font-bold">
+          {document.title}
+        </h1>
         <div
-          className="b-std mt-9 grid w-full gap-3 bg-neutral-300 p-3 transition-colors md:grid-cols-3 md:grid-rows-1 dark:bg-neutral-700"
+          className="3xl:my-[45px] 3xl:gap-[15px] 3xl:rounded-[15px] 3xl:p-[15px] 4xl:my-[54px] 4xl:gap-[18px] 4xl:rounded-[18px] 4xl:p-[18px] b-std rows-3 my-[36px] grid w-full grid-cols-1 gap-[12px] rounded-[12px] bg-neutral-300 p-[12px] transition-colors md:grid-cols-3 md:grid-rows-1 dark:bg-neutral-700"
           role="region"
           aria-label="Filters and Summary"
         >
@@ -45,10 +49,12 @@ export default function App() {
             value={ageFilter}
             onChange={handleFilterChange}
           />
-          <Summary count={filteredUsers.length} lines={lines} />
-        </div>
-        <div className="h-9 py-2">
-          <ProgressBar current={allUsers.length} max={USERS_LIMIT} />
+          <Summary
+            loaded={allUsers.length}
+            progress={progress}
+            founded={filteredUsers.length}
+            lines={lines}
+          />
         </div>
         {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
       </div>
