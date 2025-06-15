@@ -1,6 +1,4 @@
 // App dependencies
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/react";
 import NavBar from "./NavBar";
 import Filter from "./Filter";
 import Summary from "./Summary";
@@ -8,8 +6,6 @@ import Grid from "./Grid";
 import useGridFilters, { USERS_LIMIT } from "../hooks/useGridFilters";
 import useGridColumns from "../hooks/useGridColumns";
 import useGridLines from "../hooks/useGridLines";
-// Constant to identify the Vercel environment and enable its tools in the App
-const vercel = import.meta.env.VITE_VERCEL;
 // Exports the App for import into the page index component
 export default function App() {
   // Retrieves users data and filters values and handlers
@@ -25,7 +21,7 @@ export default function App() {
     <div className="3xl:py-[30px] 4xl:py-[36px] max-h-full min-h-[100svh] w-full bg-neutral-200 py-[24px] font-sans text-neutral-900 transition-colors dark:bg-neutral-800 dark:text-neutral-100">
       <div className="mx-auto max-w-9/10 text-center sm:max-w-85/100 md:max-w-8/10 lg:max-w-3/4 xl:max-w-7/10 2xl:max-w-2/3">
         <NavBar />
-        <h1 className="3xl:mt-[30px] 3xl:text-[60px] 4xl:mt-[36px] 4xl:text-[72px] mt-[24px] text-[48px] font-bold">
+        <h1 className="3xl:mt-[30px] 3xl:text-[60px] 4xl:mt-[36px] 4xl:text-[72px] text-[48px] font-bold">
           {document.title}
         </h1>
         <div
@@ -58,8 +54,6 @@ export default function App() {
         </div>
         {filteredUsers.length > 0 && <Grid cells={filteredUsers} />}
       </div>
-      {vercel && <Analytics />}
-      {vercel && <SpeedInsights />}
     </div>
   );
 }

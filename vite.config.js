@@ -7,10 +7,6 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss(), visualizer({ open: true })],
-    define: {
-      //eslint-disable-next-line no-undef
-      "import.meta.env.VITE_VERCEL": JSON.stringify(process.env.VERCEL === "1"),
-    },
     server: {
       warmup: {
         clientFiles: ["./src/index.jsx"],
